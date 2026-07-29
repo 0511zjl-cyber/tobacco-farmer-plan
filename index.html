@@ -2135,10 +2135,10 @@ button { cursor: pointer; }
     return null;
   }
 
-  function historyChange(data){
-    const valid=data.filter(Number.isFinite);
-    if(valid.length<2 || valid[0]===0) return null;
-    return (valid[valid.length-1]-valid[0])/Math.abs(valid[0]);
+  function yearOverYearChange(data){
+    const current=data[data.length-1],previous=data[data.length-2];
+    if(!Number.isFinite(current) || !Number.isFinite(previous) || previous===0) return null;
+    return (current-previous)/Math.abs(previous);
   }
 
   function formatHistoryValue(value, unit){
@@ -2155,9 +2155,9 @@ button { cursor: pointer; }
     const el=document.getElementById('historySummary');
     if(!el) return;
     el.innerHTML=metrics.map(metric=>{
-      const data=historySeries(f,metric.field),latest=latestHistoryValue(data),change=historyChange(data);
-      const changeText=change===null ? '数据不足，暂不比较' : `较最早有效年份 ${change>0?'+':''}${round(change*100,1)}%`;
-      return `<div class="history-kpi" style="--accent:${metric.color}"><span>${metric.label}</span><strong>${formatHistoryValue(latest?.value,metric.unit)}</strong><small class="${change===null?'':change>=0?'up':'down'}">${changeText}</small></div>`;
+      const data=historySeries(f,metric.field),current=data[data.length-1],change=yearOverYearChange(data);
+      const changeText=change===null ? '去年数据不足，暂不比较' : `较去年 ${change>0?'+':''}${round(change*100,1)}%`;
+      return `<div class="history-kpi" style="--accent:${metric.color}"><span>${metric.label}</span><strong>${formatHistoryValue(current,metric.unit)}</strong><small class="${change===null?'':change>=0?'up':'down'}">${changeText}</small></div>`;
     }).join('');
   }
 
