@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="zh-CN">
 <head>
   <meta charset="utf-8" />
@@ -95,6 +95,34 @@ button { cursor: pointer; }
 .risk-cards { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; }
 .risk-card { border-radius: 12px; padding: 16px; border: 1px solid var(--border); background: #fafcfb; }
 .risk-card strong { display: block; font-size: 24px; margin-top: 8px; }
+.dashboard-section { margin-bottom: 20px; }
+.dashboard-section-title { margin: 0 0 12px; display: flex; align-items: center; gap: 9px; font-size: 14px; color: #425149; }
+.dashboard-section-title::before { content:""; width: 4px; height: 16px; border-radius: 2px; background: var(--green); }
+.dashboard-filter-bar { margin-bottom: 18px; padding: 14px 16px; display: flex; align-items: center; justify-content: space-between; gap: 18px; border: 1px solid var(--border); border-radius: 8px; background: #fff; }
+.dashboard-filter-title { min-width: 150px; }
+.dashboard-filter-title strong { display: block; font-size: 14px; color: var(--text); }
+.dashboard-filter-title span { display: block; margin-top: 4px; color: var(--muted); font-size: 12px; }
+.dashboard-filter-fields { display: grid; grid-template-columns: repeat(2,minmax(150px,190px)) auto; gap: 10px; align-items: end; }
+.dashboard-filter-fields label { display: grid; gap: 5px; color: var(--muted); font-size: 11px; }
+.dashboard-filter-fields select { width: 100%; height: 38px; padding: 0 30px 0 10px; border: 1px solid var(--border); border-radius: 6px; background: #fff; color: var(--text); font: inherit; }
+.dashboard-filter-fields .btn { height: 38px; }
+.dashboard-chart { width: 100%; height: 320px; }
+.dashboard-chart.tall { height: 360px; }
+.dashboard-chart.compact { height: 260px; }
+.chart-fallback { width: 100%; min-height: 240px; display: grid; place-content: center; padding: 24px; color: var(--muted); text-align: center; background: #f7faf8; border: 1px dashed #bfd0c5; }
+.station-summary { margin-top: 4px; display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); border-top: 1px solid var(--border); }
+.station-summary > div { padding: 11px 8px 0; text-align: center; }
+.station-summary span { display: block; color: var(--muted); font-size: 11px; }
+.station-summary strong { display: block; margin-top: 4px; font-size: 15px; }
+.plan-dashboard { display: grid; grid-template-columns: minmax(0,1.05fr) minmax(360px,.95fr); gap: 20px; align-items: stretch; }
+.plan-dashboard-metrics { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 12px; align-content: start; }
+.plan-metric { min-height: 110px; border: 1px solid var(--border); background: #f8fbf9; padding: 15px; display: grid; align-content: space-between; }
+.plan-metric span { color: var(--muted); font-size: 12px; }
+.plan-metric strong { margin-top: 9px; font-size: 24px; color: var(--green-dark); }
+.plan-metric small { margin-top: 6px; color: var(--muted); line-height: 1.5; }
+.dashboard-note { margin: 0 0 14px; padding: 10px 12px; color: #516158; background: #f2f7f4; border-left: 3px solid #7aa68d; font-size: 12px; line-height: 1.6; }
+.dashboard-empty-inline { min-height: 240px; display: grid; place-content: center; text-align: center; color: var(--muted); }
+.dashboard-empty-inline strong { color: var(--text); margin-bottom: 6px; }
 .progress-block { display: grid; gap: 7px; }
 .progress-head { display: flex; justify-content: space-between; font-size: 13px; }
 .progress { height: 10px; background: #edf2ef; border-radius: 999px; overflow: hidden; }
@@ -139,7 +167,7 @@ button { cursor: pointer; }
 .badge-low { background: #eaf7ef; color: #27754d; }
 .tag { display: inline-block; padding: 3px 7px; margin: 2px 3px 2px 0; border-radius: 6px; font-size: 10px; background: #eef2f0; color: #4f6258; }
 .action-link { color: var(--green); font-weight: 800; border: 0; background: transparent; padding: 4px; }
-.filters { display: grid; grid-template-columns: 1.5fr repeat(4,minmax(120px,1fr)) auto; gap: 12px; align-items: end; }
+.filters { display: grid; grid-template-columns: 1.5fr repeat(5,minmax(120px,1fr)) auto; gap: 12px; align-items: end; }
 .filters label { display: grid; gap: 6px; color: var(--muted); font-size: 12px; }
 .filters input, .filters select { width: 100%; border: 1px solid var(--border); border-radius: 9px; padding: 9px 10px; background: #fff; color: var(--text); }
 .pagination { display: flex; justify-content: flex-end; align-items: center; gap: 7px; margin-top: 14px; }
@@ -216,6 +244,10 @@ button { cursor: pointer; }
   .top-actions .rule-badge, .top-actions .btn-secondary { display: none; }
   .page { padding: 18px; }
   .donut-layout { grid-template-columns: 1fr; }
+  .plan-dashboard { grid-template-columns: 1fr; }
+  .dashboard-filter-bar { align-items: flex-end; }
+  .dashboard-filter-fields { grid-template-columns: repeat(2,minmax(130px,1fr)) auto; }
+  .dashboard-chart, .dashboard-chart.tall { height: 310px; }
 }
 @media (max-width: 640px) {
   .app-shell { display: block; }
@@ -230,6 +262,13 @@ button { cursor: pointer; }
   .topbar p { display: none; }
   .top-actions .btn { padding: 8px 10px; }
   .kpi-grid { grid-template-columns: repeat(2,1fr); }
+  .kpi-value { font-size: 23px; }
+  .plan-dashboard-metrics { grid-template-columns: 1fr 1fr; }
+  .dashboard-filter-bar { display: block; padding: 13px; }
+  .dashboard-filter-fields { margin-top: 12px; grid-template-columns: 1fr 1fr; }
+  .dashboard-filter-fields .btn { grid-column: 1 / -1; }
+  .station-summary { grid-template-columns: repeat(2,1fr); }
+  .dashboard-chart, .dashboard-chart.tall, .dashboard-chart.compact { height: 290px; }
   .dimension-rule-grid { grid-template-columns: repeat(2,1fr); }
   .filters { grid-template-columns: 1fr 1fr; }
   .template-card { grid-template-columns: 48px 1fr; }
@@ -352,43 +391,74 @@ button { cursor: pointer; }
         </div>
 
         <div id="dashboardContent">
-          <div id="kpiGrid" class="kpi-grid"></div>
+          <section class="dashboard-filter-bar" aria-label="综合看板数据筛选">
+            <div class="dashboard-filter-title">
+              <strong>数据范围</strong>
+              <span id="dashboardFilterSummary">全部烟农</span>
+            </div>
+            <div class="dashboard-filter-fields">
+              <label>县
+                <select id="dashboardCountyFilter" aria-label="按县筛选"><option value="">全部县</option></select>
+              </label>
+              <label>烟站
+                <select id="dashboardStationFilter" aria-label="按烟站筛选"><option value="">全部烟站</option></select>
+              </label>
+              <button id="resetDashboardFiltersBtn" class="btn btn-secondary" type="button">重置</button>
+            </div>
+          </section>
+
+          <section class="dashboard-section" aria-labelledby="dashboardKpiTitle">
+            <h3 id="dashboardKpiTitle" class="dashboard-section-title">决策指标</h3>
+            <div id="kpiGrid" class="kpi-grid"></div>
+          </section>
 
           <div class="grid-2 dashboard-grid">
             <article class="panel">
               <div class="panel-header">
-                <div><h3>综合分类分布</h3><p>四类烟农数量与占比</p></div>
+                <div><h3>烟农分类结构</h3><p>四类烟农数量与结构占比</p></div>
               </div>
-              <div id="classDistribution" class="chart-area"></div>
+              <div id="classDistribution" class="dashboard-chart" role="img" aria-label="烟农分类结构图"></div>
             </article>
 
             <article class="panel">
               <div class="panel-header">
-                <div><h3>五维平均画像</h3><p>各维度标准分，满分100</p></div>
+                <div><h3>五维能力画像</h3><p>群体平均能力与80分优秀标准线</p></div>
               </div>
-              <div id="averageRadar" class="chart-area"></div>
+              <div id="averageRadar" class="dashboard-chart" role="img" aria-label="五维能力雷达图"></div>
             </article>
           </div>
 
           <div class="grid-2 dashboard-grid">
             <article class="panel">
               <div class="panel-header">
-                <div><h3>乡镇/烟站比较</h3><p>按综合得分排序</p></div>
+                <div><h3>烟站能力排名</h3><p>综合比较平均分、烟农数量、核心户与风险户</p></div>
               </div>
-              <div id="townshipBars" class="bars-chart"></div>
+              <div id="stationBars" class="dashboard-chart tall" role="img" aria-label="烟站能力排名图"></div>
+              <div id="stationSummary" class="station-summary"></div>
             </article>
 
             <article class="panel">
               <div class="panel-header">
-                <div><h3>风险与数据质量</h3><p>风险等级、数据完整度和待处理事项</p></div>
+                <div><h3>风险预警分析</h3><p>年龄、规模、质量和履约四类风险识别</p></div>
               </div>
-              <div id="riskSummary" class="risk-summary"></div>
+              <div id="riskSummary" class="dashboard-chart tall" role="img" aria-label="风险预警分析图"></div>
+              <div id="riskDefinition" class="dashboard-note"></div>
             </article>
           </div>
+
+          <article class="panel dashboard-section">
+            <div class="panel-header">
+              <div><h3>精准计划结果</h3><p>展示面积、产量、闭环完成率与各类烟农调整幅度</p></div>
+            </div>
+            <div class="plan-dashboard">
+              <div id="planDashboardMetrics" class="plan-dashboard-metrics"></div>
+              <div id="planCategoryChart" class="dashboard-chart compact" role="img" aria-label="分类计划调整幅度图"></div>
+            </div>
+          </article>
 
           <article class="panel">
             <div class="panel-header panel-header-row">
-              <div><h3>重点关注烟农</h3><p>优先展示高风险、低效预警及数据缺失较多的烟农</p></div>
+              <div><h3>重点关注烟农</h3><p>聚合风险原因、建议措施、种植面积与收购计划</p></div>
               <button class="btn btn-text" data-go="farmers">查看全部 →</button>
             </div>
             <div class="table-wrap"><table id="attentionTable" class="data-table"></table></div>
@@ -405,10 +475,10 @@ button { cursor: pointer; }
             <div class="template-card">
               <div class="file-icon">XLSX</div>
               <div>
-                <h4>烟农数据导入模板 V2.1</h4>
+                <h4>烟农数据导入模板</h4>
                 <p>包含空白数据表、字段说明、评分规则和示例数据。</p>
               </div>
-              <a class="btn btn-secondary" href="烟农数据导入模板_V2.1.xlsx" download>下载模板</a>
+              <a class="btn btn-secondary" href="烟农数据导入模板.xlsx" download>下载模板</a>
             </div>
             <div class="notice info">
               <strong>填写要求</strong>
@@ -451,10 +521,11 @@ button { cursor: pointer; }
       <section id="page-farmers" class="page">
         <article class="panel filter-panel">
           <div class="filters">
-            <label>关键词<input id="searchInput" type="search" placeholder="姓名、编号、乡镇" /></label>
+            <label>关键词<input id="searchInput" type="search" placeholder="姓名、编号、县、烟站" /></label>
             <label>综合分类<select id="classFilter"><option value="">全部分类</option></select></label>
             <label>风险等级<select id="riskFilter"><option value="">全部风险</option></select></label>
-            <label>乡镇/烟站<select id="townshipFilter"><option value="">全部区域</option></select></label>
+            <label>县<select id="countyFilter"><option value="">全部县</option></select></label>
+            <label>烟站<select id="stationFilter"><option value="">全部烟站</option></select></label>
             <label>最低得分<input id="scoreMin" type="number" min="0" max="100" placeholder="0" /></label>
             <button id="resetFiltersBtn" class="btn btn-secondary">重置</button>
           </div>
@@ -501,14 +572,13 @@ button { cursor: pointer; }
               </div>
               <div class="form-grid">
                 <div class="form-field"><label>计划年度</label><input id="planYear" type="number" min="2020" max="2100" /><span class="hint">用于结果导出和年度档案。</span></div>
-                <div class="form-field"><label>全市固定种植面积（亩）</label><input id="planTotalArea" type="number" min="0" step="0.1" /><span class="hint">最终分户面积合计必须等于该值。</span></div>
+                <div class="form-field"><label>全市固定种植面积（亩）</label><input id="planTotalArea" type="number" min="0" step="1" /><span class="hint">最终分户面积合计必须等于该值，分户面积统一按1亩精度分配。</span></div>
                 <div class="form-field"><label>全市固定收购计划（kg）</label><input id="planTotalPurchase" type="number" min="0" step="1" /><span class="hint">最终分户收购计划合计必须等于该值。</span></div>
                 <div class="form-field"><label>新烟农基础亩产（自动）</label><input id="planCityAvgYield" type="text" disabled /><span class="hint">全市总收购计划 ÷ 全市种植面积。</span></div>
                 <div class="form-field"><label>种植意愿权重（%）</label><input id="planIntentWeight" type="number" min="0" max="100" step="1" /><span class="hint">建议70%，体现申请亩数为首要依据。</span></div>
                 <div class="form-field"><label>画像调节权重（%）</label><input id="planProfileWeight" type="number" min="0" max="100" step="1" /><span class="hint">与意愿权重合计必须为100%。</span></div>
                 <div class="form-field"><label>单户面积最大调整（亩）</label><input id="planAreaLimit" type="number" min="0" max="5" step="0.1" /><span class="hint">系统硬限制最大5亩。</span></div>
                 <div class="form-field"><label>单户亩产最大浮动（%）</label><input id="planYieldLimit" type="number" min="0" max="10" step="0.1" /><span class="hint">系统硬限制最大10%。</span></div>
-                <div class="form-field"><label>面积分配精度（亩）</label><select id="planAreaPrecision"><option value="1">1</option><option value="0.5">0.5</option><option value="0.1">0.1</option></select><span class="hint">推荐0.1亩。</span></div>
               </div>
 
               <div class="parameter-section">
@@ -635,7 +705,7 @@ button { cursor: pointer; }
           <article class="panel prose">
             <h3>常见问题</h3>
             <details open><summary>为什么总分与指标得分之和不同？</summary><p>系统对已评价指标进行折算，得到可比较的百分制总分；同时显示数据完整度。核心标杆户要求数据完整度达到90%。</p></details>
-            <details><summary>同群体分位如何计算？</summary><p>年均收购量、加权亩产和平均单价优先在同乡镇/烟站内比较；同组有效样本少于5户时，自动使用全体样本。种植意愿亩数只要有效填写即得满分。</p></details>
+            <details><summary>同群体分位如何计算？</summary><p>年均收购量、加权亩产和平均单价优先在同烟站内比较；同组有效样本少于5户时，自动使用全体样本。种植意愿亩数只要有效填写即得满分。</p></details>
             <details><summary>年龄65岁以上得分高，为什么仍是老龄维持户？</summary><p>“老龄维持户”是服务方式分类，不代表低分。系统仍保留其总分、风险等级和优势标签。</p></details>
             <details><summary>导入后如何修改？</summary><p>在原Excel中修正后重新导入，选择“按烟农编号合并更新”；也可选择替换全部数据。</p></details>
             <details><summary>可以部署到内网吗？</summary><p>可以。将整个文件夹放到内网服务器的静态目录即可；也可以直接双击 index.html 本地运行。</p></details>
@@ -669,6 +739,7 @@ button { cursor: pointer; }
   </div>
 
   <div id="toast" class="toast hidden"></div>
+  <script src="https://cdn.jsdelivr.net/npm/echarts@5.6.0/dist/echarts.min.js"></script>
   <script>
 (() => {
   'use strict';
@@ -700,8 +771,8 @@ button { cursor: pointer; }
   };
 
   const FIELDS = [
-    ['evaluation_year', '评价年度'], ['farmer_id', '烟农编号'], ['name', '姓名'], ['township', '乡镇/烟站'],
-    ['birth_date', '出生日期'], ['county', '所在县'], ['contact_phone', '联系电话'], ['disaster_status', '受灾情况'], ['is_new_farmer', '新烟农'], ['continuous_years', '连续种烟年限'],
+    ['evaluation_year', '评价年度'], ['farmer_id', '烟农编号'], ['name', '姓名'], ['county', '县'], ['station', '烟站'],
+    ['birth_date', '出生日期'], ['contact_phone', '联系电话'], ['disaster_status', '受灾情况'], ['is_new_farmer', '新烟农'], ['continuous_years', '连续种烟年限'],
     ['family_labor_count', '家庭劳动力人数'], ['next_year_intended_area', '种植意愿亩数'],
     ['avg_purchase_weight_3y', '近3年年均收购总量kg'], ['yield_cv_3y', '近3年亩产变异系数%'],
     ['curing_house_count', '烤房数量'], ['machinery_types_count', '农机设备类型数'],
@@ -728,6 +799,10 @@ button { cursor: pointer; }
   ]));
   FIELD_ALIASES[normalizeHeader('curing_capacity_rate')] = 'curing_capacity_rate';
   FIELD_ALIASES[normalizeHeader('烤房保障率%')] = 'curing_capacity_rate';
+  FIELD_ALIASES[normalizeHeader('所在县')] = 'county';
+  FIELD_ALIASES[normalizeHeader('所属烟站')] = 'station';
+  FIELD_ALIASES[normalizeHeader('乡镇/烟站')] = 'station';
+  FIELD_ALIASES[normalizeHeader('township')] = 'station';
   [
     ['core_tech_verified_count','core_tech_verified_count'], ['核心技术落实项数','core_tech_verified_count'],
     ['unexcused_absences','unexcused_absences'], ['无故缺席次数','unexcused_absences'],
@@ -755,7 +830,7 @@ button { cursor: pointer; }
   const BOOLEAN_FIELDS = new Set([
     'is_new_farmer','prohibited_pesticide','unauthorized_contract_transfer','false_data','serious_violation'
   ]);
-  const REQUIRED_FIELDS = ['farmer_id','name','township','birth_date'];
+  const REQUIRED_FIELDS = ['farmer_id','name','county','station','birth_date'];
   const PERCENTILE_FIELDS = ['avg_purchase_weight_3y','weighted_yield_3y','avg_purchase_price'];
 
   const RULES = [
@@ -763,13 +838,13 @@ button { cursor: pointer; }
     rule('continuous_years','基础属性','连续种烟年限',3,'continuous_years','正向分档','≥10年3分；6—9年2.4分；3—5年1.8分；1—2年1.2分；不足1年0.6分', scoreContinuousYears),
     rule('family_labor','基础属性','家庭劳动力人口',2,'family_labor_count','正向分档','≥3人2分；2人1.5分；1人0.8分；0人0分', scoreFamilyLabor),
     rule('planting_intent','基础属性','种植意愿（亩数）',3,'next_year_intended_area','有效值满分','填写任意有效亩数即得3分；未填写不计入评分', ctx => numberValue(ctx.farmer.next_year_intended_area) === null ? missing('种植意愿亩数') : result(3, `已填写种植意愿${numberValue(ctx.farmer.next_year_intended_area)}亩，得满分3分`)),
-    rule('avg_purchase_weight','基础属性','年均收购总量',8,'avg_purchase_weight_3y','同群体分位','同乡镇P80、P60、P40、P20对应8、6.4、4.8、3.2、1.6分', ctx => scorePercentileRule(ctx,'avg_purchase_weight_3y',8)),
+    rule('avg_purchase_weight','基础属性','年均收购总量',8,'avg_purchase_weight_3y','同群体分位','同烟站P80、P60、P40、P20对应8、6.4、4.8、3.2、1.6分', ctx => scorePercentileRule(ctx,'avg_purchase_weight_3y',8)),
 
     rule('yield_cv','生产能力','亩产量变异系数',3,'yield_cv_3y','反向分档','≤5%为3分；≤10%为2.4分；≤15%为1.8分；≤20%为1.2分；>20%为0.6分', scoreYieldCv),
     rule('curing_capacity','生产能力','烤房数量',2,'curing_house_count','自动计算保障率','烤房数量×20÷种植意愿亩数；≥100%为2分；≥90%为1.6分；≥80%为1.2分；≥70%为0.8分；其余0.4分', scoreCuringCapacity),
     rule('machinery','生产能力','农机设备',2,'machinery_types_count','清单计分','4类及以上2分；3类1.5分；2类1分；1类0.5分；无0分', scoreMachinery),
     rule('contract_output','生产能力','合同产量完成率',8,'contract_output_completion_rate','目标区间','95%—105%为8分；90%—110%为6.4分；80%—120%为4.8分；70%—130%为3.2分；其余1.6分', scoreContractOutput),
-    rule('weighted_yield','生产能力','历史亩均单产',8,'weighted_yield_3y','同群体分位','同乡镇P80、P60、P40、P20对应8、6.4、4.8、3.2、1.6分', ctx => scorePercentileRule(ctx,'weighted_yield_3y',8)),
+    rule('weighted_yield','生产能力','历史亩均单产',8,'weighted_yield_3y','同群体分位','同烟站P80、P60、P40、P20对应8、6.4、4.8、3.2、1.6分', ctx => scorePercentileRule(ctx,'weighted_yield_3y',8)),
     rule('land_concentration','生产能力','烟田集中度',1,'land_concentration_rate','正向分档','≥80%为1分；≥60%为0.8分；≥40%为0.6分；≥20%为0.4分；其余0.2分', ctx => scoreRateBands(ctx,'land_concentration_rate',1,[[.8,1],[.6,.8],[.4,.6],[.2,.4],[-Infinity,.2]],'烟田集中度')),
     rule('rotation','生产能力','烟田轮作比例',1,'rotation_rate','正向分档','≥90%为1分；≥80%为0.8分；≥70%为0.6分；≥60%为0.4分；其余0.2分', ctx => scoreRateBands(ctx,'rotation_rate',1,[[.9,1],[.8,.8],[.7,.6],[.6,.4],[-Infinity,.2]],'烟田轮作比例')),
     rule('deep_tillage','生产能力','深耕深垄完成比例',1,'deep_tillage_ridge_rate','正向分档','100%为1分；≥90%为0.8分；≥80%为0.6分；≥60%为0.4分；其余0.2分', ctx => scoreRateBands(ctx,'deep_tillage_ridge_rate',1,[[.999,1],[.9,.8],[.8,.6],[.6,.4],[-Infinity,.2]],'深耕深垄完成比例')),
@@ -777,7 +852,7 @@ button { cursor: pointer; }
 
     rule('upper_middle_grade','质量水平','中、上等烟占比',11,'upper_middle_grade_rate','正向分档','≥90%为11分；≥85%为8.8分；≥80%为6.6分；≥75%为4.4分；其余2.2分', ctx => scoreRateBands(ctx,'upper_middle_grade_rate',11,[[.9,11],[.85,8.8],[.8,6.6],[.75,4.4],[-Infinity,2.2]],'中、上等烟占比')),
     rule('input_output','质量水平','投入产出比',10,'input_output_ratio','正向分档','≥1.8为10分；≥1.6为8分；≥1.4为6分；≥1.2为4分；其余2分', scoreInputOutput),
-    rule('avg_price','质量水平','平均收购单价',6,'avg_purchase_price','同群体分位','同乡镇P80、P60、P40、P20对应6、4.8、3.6、2.4、1.2分', ctx => scorePercentileRule(ctx,'avg_purchase_price',6)),
+    rule('avg_price','质量水平','平均收购单价',6,'avg_purchase_price','同群体分位','同烟站P80、P60、P40、P20对应6、4.8、3.6、2.4、1.2分', ctx => scorePercentileRule(ctx,'avg_purchase_price',6)),
     rule('transplant','质量水平','育苗移栽规范度',2,'transplant_standard_rate','检查表','≥95%为2分；≥90%为1.6分；≥80%为1.2分；≥70%为0.8分；其余0.4分', ctx => scoreRateBands(ctx,'transplant_standard_rate',2,[[.95,2],[.9,1.6],[.8,1.2],[.7,.8],[-Infinity,.4]],'育苗移栽规范度')),
     rule('field_management','质量水平','田管到位率',1,'field_management_rate','检查表','≥95%为1分；≥90%为0.8分；≥80%为0.6分；≥70%为0.4分；其余0.2分', ctx => scoreRateBands(ctx,'field_management_rate',1,[[.95,1],[.9,.8],[.8,.6],[.7,.4],[-Infinity,.2]],'田管到位率')),
     rule('pest_control','质量水平','病虫害防控情况',2,'pest_control_standard_rate','综合规则','规范率分档；使用禁用农药为0分并触发红线', scorePestControl),
@@ -798,6 +873,8 @@ button { cursor: pointer; }
     importReport: null,
     currentPage: 'dashboard',
     tablePage: 1,
+    dashboardCounty: '',
+    dashboardStation: '',
     plan: null
   };
   let confirmResolver = null;
@@ -1019,7 +1096,7 @@ button { cursor: pointer; }
     const factor = raw >= p80 ? 1 : raw >= p60 ? .8 : raw >= p40 ? .6 : raw >= p20 ? .4 : .2;
     const score = round(weight * factor, 2);
     const shown = isRate ? pct(raw) : round(raw,2);
-    const groupText = stats.fallback ? '同组不足5户，采用全体样本' : `采用${ctx.farmer.township || '同组'}样本`;
+    const groupText = stats.fallback ? '同组不足5户，采用全体样本' : `采用${ctx.farmer.station || '同组'}样本`;
     return result(score, `原始值${shown}；${groupText}；命中${factor === 1 ? 'P80及以上' : factor === .8 ? 'P60—P80' : factor === .6 ? 'P40—P60' : factor === .4 ? 'P20—P40' : 'P20以下'}，得${score}分`);
   }
 
@@ -1062,7 +1139,10 @@ button { cursor: pointer; }
   }
 
   function evaluateFarmers(rawFarmers) {
-    const normalized = rawFarmers.map((farmer, index) => ({ ...farmer, __row: index + 2, __groupKey: String(farmer.township || '未分组').trim() || '未分组' }));
+    const normalized = rawFarmers.map((farmer, index) => {
+      const station = String(farmer.station || farmer.township || '').trim();
+      return { ...farmer, county: String(farmer.county || '').trim(), station, __row: index + 2, __groupKey: station || '未分组' };
+    });
     const percentiles = buildPercentiles(normalized);
     return normalized.map(farmer => evaluateOne(farmer, percentiles));
   }
@@ -1197,7 +1277,9 @@ button { cursor: pointer; }
     }
     out.farmer_id = String(out.farmer_id || '').trim();
     out.name = String(out.name || '').trim();
-    out.township = String(out.township || '').trim();
+    out.county = String(out.county || '').trim();
+    out.station = String(out.station || out.township || '').trim();
+    delete out.township;
     return out;
   }
 
@@ -1423,23 +1505,44 @@ button { cursor: pointer; }
     try {
       const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || localStorage.getItem('tobacco_farmer_profile_v1') || 'null');
       if (saved?.rawFarmers?.length) {
-        state.rawFarmers = saved.rawFarmers;
+        state.rawFarmers = saved.rawFarmers.map(farmer => {
+          const station = String(farmer.station || farmer.township || '').trim();
+          const migrated = { ...farmer, county: String(farmer.county || '').trim(), station };
+          delete migrated.township;
+          return migrated;
+        });
         state.evaluated = evaluateFarmers(state.rawFarmers);
         state.plan = saved.plan || defaultPlanState();
+        state.plan.config = { ...defaultPlanConfig(), ...(state.plan.config || {}), areaPrecision: 1 };
+        const locations = new Map(state.rawFarmers.map(farmer => [farmer.farmer_id, farmer]));
+        ['areaInitial','areaBalanced','yieldAdjusted','purchaseBalanced'].forEach(key => {
+          state.plan[key] = (state.plan[key] || []).map(row => {
+            const farmer = locations.get(row.farmer_id) || {};
+            const migrated = { ...row, county: row.county || farmer.county || '', station: row.station || row.township || farmer.station || '' };
+            delete migrated.township;
+            return migrated;
+          });
+        });
+        state.plan.anomalies = (state.plan.anomalies || []).map(row => {
+          const farmer = locations.get(row.farmer_id) || {};
+          const migrated = { ...row, county: row.county || farmer.county || '', station: row.station || row.township || farmer.station || '' };
+          delete migrated.township;
+          return migrated;
+        });
       }
     } catch (_) { try { localStorage.removeItem(STORAGE_KEY); } catch (_) {} }
   }
 
   function sampleData() {
     const rows = [
-      {evaluation_year:2026,farmer_id:'FN202600001',name:'张明',township:'官渡镇',birth_date:'1982-04-18',is_new_farmer:false,continuous_years:12,family_labor_count:3,next_year_intended_area:38,avg_purchase_weight_3y:8450,yield_cv_3y:.062,curing_house_count:2,machinery_types_count:4,contract_output_completion_rate:.99,weighted_yield_3y:135,land_concentration_rate:.82,rotation_rate:.92,deep_tillage_ridge_rate:.96,three_first_tasks_count:3,upper_grade_rate:.32,upper_middle_grade_rate:.91,input_output_ratio:1.72,avg_purchase_price:29.6,transplant_standard_rate:.96,field_management_rate:.94,pest_control_standard_rate:.95,prohibited_pesticide:false,curing_quality_rate:.91,core_tech_verified_count:3,land_condition_rate:.88,unexcused_absences:0,overdue_submissions:0,refusal_cooperation_count:0,new_tech_adoption_count:3,demonstration_support_level:3,delay_delivery_count:0,unauthorized_contract_transfer:false,false_data:false,serious_violation:false,contract_abnormal_years:0,remarks:'示例：核心标杆候选'},
-      {evaluation_year:2026,farmer_id:'FN202600002',name:'李强',township:'官渡镇',birth_date:'1958-09-02',is_new_farmer:false,continuous_years:24,family_labor_count:2,next_year_intended_area:22,avg_purchase_weight_3y:5200,yield_cv_3y:.095,curing_house_count:1,machinery_types_count:3,contract_output_completion_rate:.97,weighted_yield_3y:121,land_concentration_rate:.65,rotation_rate:.86,deep_tillage_ridge_rate:.9,three_first_tasks_count:2,upper_grade_rate:.24,upper_middle_grade_rate:.87,input_output_ratio:1.48,avg_purchase_price:27.8,transplant_standard_rate:.91,field_management_rate:.88,pest_control_standard_rate:.9,prohibited_pesticide:false,curing_quality_rate:.86,core_tech_verified_count:2,land_condition_rate:.78,unexcused_absences:1,overdue_submissions:0,refusal_cooperation_count:0,new_tech_adoption_count:2,demonstration_support_level:2,delay_delivery_count:1,unauthorized_contract_transfer:false,false_data:false,serious_violation:false,contract_abnormal_years:1,remarks:'示例：老龄维持户'},
-      {evaluation_year:2026,farmer_id:'FN202600003',name:'王华',township:'官渡镇',birth_date:'1995-11-20',is_new_farmer:true,continuous_years:.5,family_labor_count:2,next_year_intended_area:25,avg_purchase_weight_3y:0,yield_cv_3y:null,curing_house_count:1,machinery_types_count:2,contract_output_completion_rate:.9,weighted_yield_3y:0,land_concentration_rate:.55,rotation_rate:.75,deep_tillage_ridge_rate:.82,three_first_tasks_count:1,upper_grade_rate:0,upper_middle_grade_rate:0,input_output_ratio:1.3,avg_purchase_price:0,transplant_standard_rate:.82,field_management_rate:.78,pest_control_standard_rate:.85,prohibited_pesticide:false,curing_quality_rate:.8,core_tech_verified_count:1,land_condition_rate:.72,unexcused_absences:0,overdue_submissions:1,refusal_cooperation_count:0,new_tech_adoption_count:1,demonstration_support_level:1,delay_delivery_count:0,unauthorized_contract_transfer:false,false_data:false,serious_violation:false,contract_abnormal_years:0,remarks:'示例：新烟农'},
-      {evaluation_year:2026,farmer_id:'FN202600004',name:'陈勇',township:'宝丰镇',birth_date:'1976-06-12',is_new_farmer:false,continuous_years:8,family_labor_count:1,next_year_intended_area:12,avg_purchase_weight_3y:3200,yield_cv_3y:.22,curing_house_count:0,machinery_types_count:1,contract_output_completion_rate:.65,weighted_yield_3y:82,land_concentration_rate:.25,rotation_rate:.55,deep_tillage_ridge_rate:.58,three_first_tasks_count:0,upper_grade_rate:.12,upper_middle_grade_rate:.7,input_output_ratio:1.05,avg_purchase_price:22.1,transplant_standard_rate:.65,field_management_rate:.62,pest_control_standard_rate:.6,prohibited_pesticide:true,curing_quality_rate:.58,core_tech_verified_count:0,land_condition_rate:.48,unexcused_absences:3,overdue_submissions:2,refusal_cooperation_count:1,new_tech_adoption_count:0,demonstration_support_level:0,delay_delivery_count:3,unauthorized_contract_transfer:true,false_data:true,serious_violation:false,contract_abnormal_years:3,remarks:'示例：红线预警'},
-      {evaluation_year:2026,farmer_id:'FN202600005',name:'刘军',township:'宝丰镇',birth_date:'1988-02-28',is_new_farmer:false,continuous_years:6,family_labor_count:2,next_year_intended_area:28,avg_purchase_weight_3y:6100,yield_cv_3y:.12,curing_house_count:1,machinery_types_count:3,contract_output_completion_rate:.94,weighted_yield_3y:116,land_concentration_rate:.7,rotation_rate:.83,deep_tillage_ridge_rate:.88,three_first_tasks_count:2,upper_grade_rate:.26,upper_middle_grade_rate:.86,input_output_ratio:1.55,avg_purchase_price:28.2,transplant_standard_rate:.88,field_management_rate:.86,pest_control_standard_rate:.89,prohibited_pesticide:false,curing_quality_rate:.84,core_tech_verified_count:2,land_condition_rate:.76,unexcused_absences:0,overdue_submissions:1,refusal_cooperation_count:0,new_tech_adoption_count:2,demonstration_support_level:2,delay_delivery_count:0,unauthorized_contract_transfer:false,false_data:false,serious_violation:false,contract_abnormal_years:0,remarks:'示例：稳定经营户'},
-      {evaluation_year:2026,farmer_id:'FN202600006',name:'周平',township:'宝丰镇',birth_date:'1980-07-16',is_new_farmer:false,continuous_years:10,family_labor_count:3,next_year_intended_area:42,avg_purchase_weight_3y:9200,yield_cv_3y:.045,curing_house_count:2,machinery_types_count:4,contract_output_completion_rate:1.03,weighted_yield_3y:142,land_concentration_rate:.88,rotation_rate:.94,deep_tillage_ridge_rate:.98,three_first_tasks_count:3,upper_grade_rate:.38,upper_middle_grade_rate:.94,input_output_ratio:1.92,avg_purchase_price:31,transplant_standard_rate:.97,field_management_rate:.96,pest_control_standard_rate:.98,prohibited_pesticide:false,curing_quality_rate:.93,core_tech_verified_count:4,land_condition_rate:.92,unexcused_absences:0,overdue_submissions:0,refusal_cooperation_count:0,new_tech_adoption_count:4,demonstration_support_level:3,delay_delivery_count:0,unauthorized_contract_transfer:false,false_data:false,serious_violation:false,contract_abnormal_years:0,remarks:'示例：核心标杆户'},
-      {evaluation_year:2026,farmer_id:'FN202600007',name:'赵林',township:'官渡镇',birth_date:'1972-03-05',is_new_farmer:false,continuous_years:9,family_labor_count:2,next_year_intended_area:30,avg_purchase_weight_3y:6800,yield_cv_3y:.08,curing_house_count:1,machinery_types_count:3,contract_output_completion_rate:1.02,weighted_yield_3y:128,land_concentration_rate:.76,rotation_rate:.9,deep_tillage_ridge_rate:.92,three_first_tasks_count:3,upper_grade_rate:.29,upper_middle_grade_rate:.89,input_output_ratio:1.65,avg_purchase_price:29,transplant_standard_rate:.93,field_management_rate:.92,pest_control_standard_rate:.94,prohibited_pesticide:false,curing_quality_rate:.88,core_tech_verified_count:3,land_condition_rate:.85,unexcused_absences:0,overdue_submissions:0,refusal_cooperation_count:0,new_tech_adoption_count:3,demonstration_support_level:2,delay_delivery_count:0,unauthorized_contract_transfer:false,false_data:false,serious_violation:false,contract_abnormal_years:0,remarks:'示例'},
-      {evaluation_year:2026,farmer_id:'FN202600008',name:'孙伟',township:'宝丰镇',birth_date:'1990-10-11',is_new_farmer:false,continuous_years:5,family_labor_count:2,next_year_intended_area:20,avg_purchase_weight_3y:4700,yield_cv_3y:.17,curing_house_count:1,machinery_types_count:2,contract_output_completion_rate:.84,weighted_yield_3y:104,land_concentration_rate:.48,rotation_rate:.68,deep_tillage_ridge_rate:.74,three_first_tasks_count:1,upper_grade_rate:.2,upper_middle_grade_rate:.79,input_output_ratio:1.28,avg_purchase_price:25.6,transplant_standard_rate:.77,field_management_rate:.74,pest_control_standard_rate:.78,prohibited_pesticide:false,curing_quality_rate:.72,core_tech_verified_count:1,land_condition_rate:.62,unexcused_absences:1,overdue_submissions:2,refusal_cooperation_count:0,new_tech_adoption_count:1,demonstration_support_level:1,delay_delivery_count:1,unauthorized_contract_transfer:false,false_data:false,serious_violation:false,contract_abnormal_years:1,remarks:'示例：偏弱稳定户'}
+      {evaluation_year:2026,farmer_id:'FN202600001',name:'张明',county:'竹山县',station:'官渡烟站',birth_date:'1982-04-18',is_new_farmer:false,continuous_years:12,family_labor_count:3,next_year_intended_area:38,avg_purchase_weight_3y:8450,yield_cv_3y:.062,curing_house_count:2,machinery_types_count:4,contract_output_completion_rate:.99,weighted_yield_3y:135,land_concentration_rate:.82,rotation_rate:.92,deep_tillage_ridge_rate:.96,three_first_tasks_count:3,upper_grade_rate:.32,upper_middle_grade_rate:.91,input_output_ratio:1.72,avg_purchase_price:29.6,transplant_standard_rate:.96,field_management_rate:.94,pest_control_standard_rate:.95,prohibited_pesticide:false,curing_quality_rate:.91,core_tech_verified_count:3,land_condition_rate:.88,unexcused_absences:0,overdue_submissions:0,refusal_cooperation_count:0,new_tech_adoption_count:3,demonstration_support_level:3,delay_delivery_count:0,unauthorized_contract_transfer:false,false_data:false,serious_violation:false,contract_abnormal_years:0,remarks:'示例：核心标杆候选'},
+      {evaluation_year:2026,farmer_id:'FN202600002',name:'李强',county:'竹山县',station:'官渡烟站',birth_date:'1958-09-02',is_new_farmer:false,continuous_years:24,family_labor_count:2,next_year_intended_area:22,avg_purchase_weight_3y:5200,yield_cv_3y:.095,curing_house_count:1,machinery_types_count:3,contract_output_completion_rate:.97,weighted_yield_3y:121,land_concentration_rate:.65,rotation_rate:.86,deep_tillage_ridge_rate:.9,three_first_tasks_count:2,upper_grade_rate:.24,upper_middle_grade_rate:.87,input_output_ratio:1.48,avg_purchase_price:27.8,transplant_standard_rate:.91,field_management_rate:.88,pest_control_standard_rate:.9,prohibited_pesticide:false,curing_quality_rate:.86,core_tech_verified_count:2,land_condition_rate:.78,unexcused_absences:1,overdue_submissions:0,refusal_cooperation_count:0,new_tech_adoption_count:2,demonstration_support_level:2,delay_delivery_count:1,unauthorized_contract_transfer:false,false_data:false,serious_violation:false,contract_abnormal_years:1,remarks:'示例：老龄维持户'},
+      {evaluation_year:2026,farmer_id:'FN202600003',name:'王华',county:'竹山县',station:'官渡烟站',birth_date:'1995-11-20',is_new_farmer:true,continuous_years:.5,family_labor_count:2,next_year_intended_area:25,avg_purchase_weight_3y:0,yield_cv_3y:null,curing_house_count:1,machinery_types_count:2,contract_output_completion_rate:.9,weighted_yield_3y:0,land_concentration_rate:.55,rotation_rate:.75,deep_tillage_ridge_rate:.82,three_first_tasks_count:1,upper_grade_rate:0,upper_middle_grade_rate:0,input_output_ratio:1.3,avg_purchase_price:0,transplant_standard_rate:.82,field_management_rate:.78,pest_control_standard_rate:.85,prohibited_pesticide:false,curing_quality_rate:.8,core_tech_verified_count:1,land_condition_rate:.72,unexcused_absences:0,overdue_submissions:1,refusal_cooperation_count:0,new_tech_adoption_count:1,demonstration_support_level:1,delay_delivery_count:0,unauthorized_contract_transfer:false,false_data:false,serious_violation:false,contract_abnormal_years:0,remarks:'示例：新烟农'},
+      {evaluation_year:2026,farmer_id:'FN202600004',name:'陈勇',county:'竹山县',station:'宝丰烟站',birth_date:'1976-06-12',is_new_farmer:false,continuous_years:8,family_labor_count:1,next_year_intended_area:12,avg_purchase_weight_3y:3200,yield_cv_3y:.22,curing_house_count:0,machinery_types_count:1,contract_output_completion_rate:.65,weighted_yield_3y:82,land_concentration_rate:.25,rotation_rate:.55,deep_tillage_ridge_rate:.58,three_first_tasks_count:0,upper_grade_rate:.12,upper_middle_grade_rate:.7,input_output_ratio:1.05,avg_purchase_price:22.1,transplant_standard_rate:.65,field_management_rate:.62,pest_control_standard_rate:.6,prohibited_pesticide:true,curing_quality_rate:.58,core_tech_verified_count:0,land_condition_rate:.48,unexcused_absences:3,overdue_submissions:2,refusal_cooperation_count:1,new_tech_adoption_count:0,demonstration_support_level:0,delay_delivery_count:3,unauthorized_contract_transfer:true,false_data:true,serious_violation:false,contract_abnormal_years:3,remarks:'示例：红线预警'},
+      {evaluation_year:2026,farmer_id:'FN202600005',name:'刘军',county:'竹山县',station:'宝丰烟站',birth_date:'1988-02-28',is_new_farmer:false,continuous_years:6,family_labor_count:2,next_year_intended_area:28,avg_purchase_weight_3y:6100,yield_cv_3y:.12,curing_house_count:1,machinery_types_count:3,contract_output_completion_rate:.94,weighted_yield_3y:116,land_concentration_rate:.7,rotation_rate:.83,deep_tillage_ridge_rate:.88,three_first_tasks_count:2,upper_grade_rate:.26,upper_middle_grade_rate:.86,input_output_ratio:1.55,avg_purchase_price:28.2,transplant_standard_rate:.88,field_management_rate:.86,pest_control_standard_rate:.89,prohibited_pesticide:false,curing_quality_rate:.84,core_tech_verified_count:2,land_condition_rate:.76,unexcused_absences:0,overdue_submissions:1,refusal_cooperation_count:0,new_tech_adoption_count:2,demonstration_support_level:2,delay_delivery_count:0,unauthorized_contract_transfer:false,false_data:false,serious_violation:false,contract_abnormal_years:0,remarks:'示例：稳定经营户'},
+      {evaluation_year:2026,farmer_id:'FN202600006',name:'周平',county:'竹山县',station:'宝丰烟站',birth_date:'1980-07-16',is_new_farmer:false,continuous_years:10,family_labor_count:3,next_year_intended_area:42,avg_purchase_weight_3y:9200,yield_cv_3y:.045,curing_house_count:2,machinery_types_count:4,contract_output_completion_rate:1.03,weighted_yield_3y:142,land_concentration_rate:.88,rotation_rate:.94,deep_tillage_ridge_rate:.98,three_first_tasks_count:3,upper_grade_rate:.38,upper_middle_grade_rate:.94,input_output_ratio:1.92,avg_purchase_price:31,transplant_standard_rate:.97,field_management_rate:.96,pest_control_standard_rate:.98,prohibited_pesticide:false,curing_quality_rate:.93,core_tech_verified_count:4,land_condition_rate:.92,unexcused_absences:0,overdue_submissions:0,refusal_cooperation_count:0,new_tech_adoption_count:4,demonstration_support_level:3,delay_delivery_count:0,unauthorized_contract_transfer:false,false_data:false,serious_violation:false,contract_abnormal_years:0,remarks:'示例：核心标杆户'},
+      {evaluation_year:2026,farmer_id:'FN202600007',name:'赵林',county:'竹山县',station:'官渡烟站',birth_date:'1972-03-05',is_new_farmer:false,continuous_years:9,family_labor_count:2,next_year_intended_area:30,avg_purchase_weight_3y:6800,yield_cv_3y:.08,curing_house_count:1,machinery_types_count:3,contract_output_completion_rate:1.02,weighted_yield_3y:128,land_concentration_rate:.76,rotation_rate:.9,deep_tillage_ridge_rate:.92,three_first_tasks_count:3,upper_grade_rate:.29,upper_middle_grade_rate:.89,input_output_ratio:1.65,avg_purchase_price:29,transplant_standard_rate:.93,field_management_rate:.92,pest_control_standard_rate:.94,prohibited_pesticide:false,curing_quality_rate:.88,core_tech_verified_count:3,land_condition_rate:.85,unexcused_absences:0,overdue_submissions:0,refusal_cooperation_count:0,new_tech_adoption_count:3,demonstration_support_level:2,delay_delivery_count:0,unauthorized_contract_transfer:false,false_data:false,serious_violation:false,contract_abnormal_years:0,remarks:'示例'},
+      {evaluation_year:2026,farmer_id:'FN202600008',name:'孙伟',county:'竹山县',station:'宝丰烟站',birth_date:'1990-10-11',is_new_farmer:false,continuous_years:5,family_labor_count:2,next_year_intended_area:20,avg_purchase_weight_3y:4700,yield_cv_3y:.17,curing_house_count:1,machinery_types_count:2,contract_output_completion_rate:.84,weighted_yield_3y:104,land_concentration_rate:.48,rotation_rate:.68,deep_tillage_ridge_rate:.74,three_first_tasks_count:1,upper_grade_rate:.2,upper_middle_grade_rate:.79,input_output_ratio:1.28,avg_purchase_price:25.6,transplant_standard_rate:.77,field_management_rate:.74,pest_control_standard_rate:.78,prohibited_pesticide:false,curing_quality_rate:.72,core_tech_verified_count:1,land_condition_rate:.62,unexcused_absences:1,overdue_submissions:2,refusal_cooperation_count:0,new_tech_adoption_count:1,demonstration_support_level:1,delay_delivery_count:1,unauthorized_contract_transfer:false,false_data:false,serious_violation:false,contract_abnormal_years:1,remarks:'示例：偏弱稳定户'}
     ];
     const percentageScores = [
       {core_tech_score_rate:1,cooperation_score_rate:1,new_tech_score_rate:1,demonstration_score_rate:1},
@@ -1485,18 +1588,20 @@ button { cursor: pointer; }
   function roundTo(value, precision=.1) { if (!Number.isFinite(value)) return 0; return Math.round((value + Number.EPSILON) / precision) * precision; }
   function sumBy(rows, fn) { return rows.reduce((s,r)=>s+(Number(fn(r))||0),0); }
   function planRowById(rows, id) { return rows.find(r => r.farmer_id === id); }
+  function areaGridMin(value) { return Math.ceil((value - 1e-9) / 1) * 1; }
+  function areaGridMax(value) { return Math.floor((value + 1e-9) / 1) * 1; }
 
   function resetPlanResults(keepConfig=true) {
     const config = keepConfig && state.plan?.config ? state.plan.config : defaultPlanConfig();
     state.plan = defaultPlanState();
-    state.plan.config = config;
+    state.plan.config = { ...defaultPlanConfig(), ...config, areaPrecision: 1 };
     state.plan.currentStep = 1;
   }
 
   function suggestPlanConfig() {
     const farmers = planActiveFarmers();
     if (!farmers.length) return showToast('没有可用于计划分配的种植意愿数据', true);
-    const totalArea = roundTo(sumBy(farmers,f=>numberValue(f.next_year_intended_area)||0),.1);
+    const totalArea = roundTo(sumBy(farmers,f=>numberValue(f.next_year_intended_area)||0),1);
     const valid = farmers.filter(f => !f.isNew && (numberValue(f.weighted_yield_3y)||0)>0);
     const weightedYield = valid.length ? sumBy(valid,f=>(numberValue(f.weighted_yield_3y)||0)*(numberValue(f.next_year_intended_area)||0)) / Math.max(.0001,sumBy(valid,f=>numberValue(f.next_year_intended_area)||0)) : 150;
     const totalPurchase = Math.round(totalArea * weightedYield);
@@ -1515,7 +1620,7 @@ button { cursor: pointer; }
       profileWeight:Number(document.getElementById('planProfileWeight').value),
       areaLimit:Number(document.getElementById('planAreaLimit').value),
       yieldLimit:Number(document.getElementById('planYieldLimit').value),
-      areaPrecision:Number(document.getElementById('planAreaPrecision').value),
+      areaPrecision:1,
       classCoefficients:{
         '核心标杆户':Number(document.getElementById('coefCore').value),
         '稳定经营户':Number(document.getElementById('coefStable').value),
@@ -1530,7 +1635,8 @@ button { cursor: pointer; }
     if (cfg.areaLimit < 0 || cfg.areaLimit > 5) throw new Error('单户面积调整上限不得超过5亩。');
     if (cfg.yieldLimit < 0 || cfg.yieldLimit > 10) throw new Error('单户亩产浮动上限不得超过10%。');
     if (!Object.values(cfg.classCoefficients).every(v=>Number.isFinite(v)&&v>.4&&v<1.6)) throw new Error('分类调节系数应在0.5—1.5之间。');
-    cfg.totalArea = roundTo(cfg.totalArea,cfg.areaPrecision);
+    cfg.areaPrecision = 1;
+    cfg.totalArea = roundTo(cfg.totalArea,1);
     cfg.totalPurchase = Math.round(cfg.totalPurchase);
     return cfg;
   }
@@ -1548,8 +1654,8 @@ button { cursor: pointer; }
   function planFeasibility() {
     const cfg=state.plan.config, farmers=planActiveFarmers();
     const intentSum=sumBy(farmers,f=>numberValue(f.next_year_intended_area)||0);
-    const hardMin=sumBy(farmers,f=>Math.max(0,(numberValue(f.next_year_intended_area)||0)-cfg.areaLimit));
-    const hardMax=sumBy(farmers,f=>(numberValue(f.next_year_intended_area)||0)+cfg.areaLimit);
+    const hardMin=sumBy(farmers,f=>areaGridMin(Math.max(0,(numberValue(f.next_year_intended_area)||0)-cfg.areaLimit)));
+    const hardMax=sumBy(farmers,f=>areaGridMax((numberValue(f.next_year_intended_area)||0)+cfg.areaLimit));
     const cityYield=cfg.totalArea>0?cfg.totalPurchase/cfg.totalArea:0;
     return {count:farmers.length,intentSum,hardMin,hardMax,cityYield,areaFeasible:cfg.totalArea>=hardMin-1e-6&&cfg.totalArea<=hardMax+1e-6};
   }
@@ -1572,11 +1678,11 @@ button { cursor: pointer; }
       const p=PLAN_POLICY[r.category];
       const intentShare=r.intent/intentSum,profileShare=profileSum?r.profileWeight/profileSum:0,blendedShare=iw*intentShare+pw*profileShare;
       const theoretical=cfg.totalArea*blendedShare;
-      const hardMin=Math.max(0,r.intent-cfg.areaLimit),hardMax=r.intent+cfg.areaLimit;
+      const hardMin=areaGridMin(Math.max(0,r.intent-cfg.areaLimit)),hardMax=areaGridMax(r.intent+cfg.areaLimit);
       const softMin=clamp(r.intent+Math.max(-cfg.areaLimit,p.softMinAdj),hardMin,hardMax);
       const softMax=clamp(r.intent+Math.min(cfg.areaLimit,p.softMaxAdj),hardMin,hardMax);
       const initial=clamp(theoretical,softMin,softMax);
-      return { farmer_id:r.f.farmer_id,name:r.f.name,township:r.f.township,category:r.category,totalScore:r.f.totalScore,isNew:r.f.isNew,hasRedline:r.f.hasRedline,completeness:r.f.completeness,
+      return { farmer_id:r.f.farmer_id,name:r.f.name,county:r.f.county,station:r.f.station,category:r.category,totalScore:r.f.totalScore,isNew:r.f.isNew,hasRedline:r.f.hasRedline,completeness:r.f.completeness,
         intent:r.intent,intentShare,scoreFactor:r.scoreFactor,classFactor:r.classFactor,profileWeight:r.profileWeight,profileShare,blendedShare,theoretical,softMin,softMax,hardMin,hardMax,initialArea:initial,
         addPriority:p.addPriority+(r.f.totalScore||0)/100+dimScore(r.f,'生产能力')/200,
         reducePriority:p.reducePriority+(100-(r.f.totalScore||0))/100+(r.f.hasRedline?2:0), policy:p.direction };
@@ -1629,6 +1735,7 @@ button { cursor: pointer; }
   function runAreaBalance() {
     if (!state.plan.areaInitial.length) return showToast('请先运行面积初分',true);
     const cfg=state.plan.config;
+    cfg.areaPrecision=1;
     const rows=state.plan.areaInitial.map(r=>({...r,finalArea:r.initialArea,usedHardRelaxation:false}));
     let diff=cfg.totalArea-sumBy(rows,r=>r.finalArea),remaining=Math.abs(diff),direction=diff>=0?'add':'reduce';
     remaining=distributeContinuous(rows,remaining,direction,direction==='add'?'softMax':'softMin','finalArea');
@@ -1636,7 +1743,7 @@ button { cursor: pointer; }
     if (remaining>1e-6) { usedHard=true; rows.forEach(r=>r.usedHardRelaxation=true); remaining=distributeContinuous(rows,remaining,direction,direction==='add'?'hardMax':'hardMin','finalArea'); }
     if (remaining>1e-4) return showToast('面积找平失败：可调整空间不足，请检查全市面积参数。',true);
     const units=reconcileRounded(rows,cfg.totalArea,'finalArea','hardMin','hardMax',cfg.areaPrecision);
-    if (units!==0) return showToast('面积取整后无法完全找平，请调整面积精度或总面积。',true);
+    if (units!==0) return showToast('面积按整亩取整后无法完全找平，请调整全市面积或申请结构。',true);
     rows.forEach(r=>{r.finalArea=roundTo(r.finalArea,cfg.areaPrecision);r.areaAdjustment=round(r.finalArea-r.intent,2);r.hitLimit=Math.abs(r.areaAdjustment)>=cfg.areaLimit-1e-7;r.relaxed= r.finalArea<r.softMin-1e-7||r.finalArea>r.softMax+1e-7;});
     state.plan.areaBalanced=rows; state.plan.yieldAdjusted=[]; state.plan.purchaseBalanced=[]; state.plan.anomalies=[]; state.plan.reviews={};
     state.plan.areaMeta={usedHard, target:cfg.totalArea, total:sumBy(rows,r=>r.finalArea), softMinTotal:sumBy(rows,r=>r.softMin),softMaxTotal:sumBy(rows,r=>r.softMax),hardMinTotal:sumBy(rows,r=>r.hardMin),hardMaxTotal:sumBy(rows,r=>r.hardMax)};
@@ -1693,7 +1800,7 @@ button { cursor: pointer; }
     const rows=state.plan.purchaseBalanced.length?state.plan.purchaseBalanced:(state.plan.areaBalanced.length?state.plan.areaBalanced:state.plan.areaInitial);
     const cfg=state.plan.config, anomalies=[];
     const medianIntent=median(planActiveFarmers().map(f=>numberValue(f.next_year_intended_area)||0));
-    const add=(r,type,severity,message)=>{const id=`${r?.farmer_id||'GLOBAL'}|${type}`;const review=state.plan.reviews[id]||{};anomalies.push({id,farmer_id:r?.farmer_id||'GLOBAL',name:r?.name||'全市方案',township:r?.township||'全市',type,severity,message,status:review.status||'待审核',note:review.note||''});};
+    const add=(r,type,severity,message)=>{const id=`${r?.farmer_id||'GLOBAL'}|${type}`;const review=state.plan.reviews[id]||{};anomalies.push({id,farmer_id:r?.farmer_id||'GLOBAL',name:r?.name||'全市方案',county:r?.county||'全市',station:r?.station||'全市',type,severity,message,status:review.status||'待审核',note:review.note||''});};
     rows.forEach(r=>{
       if (r.hasRedline) add(r,'信用红线','高','该户触发严重合规履约红线，必须人工核查。');
       if (Number.isFinite(r.areaAdjustment)&&Math.abs(r.areaAdjustment)>=cfg.areaLimit-1e-6) add(r,'面积达到调整边界','中',`最终面积调整${r.areaAdjustment>0?'+':''}${round(r.areaAdjustment,1)}亩，达到±${cfg.areaLimit}亩边界。`);
@@ -1750,7 +1857,8 @@ button { cursor: pointer; }
 
   function renderPlanParameters() {
     const c=state.plan.config||defaultPlanConfig(),set=(id,v)=>{const el=document.getElementById(id);if(el&&document.activeElement!==el)el.value=v??'';};
-    set('planYear',c.year);set('planTotalArea',c.totalArea||'');set('planTotalPurchase',c.totalPurchase||'');set('planIntentWeight',c.intentWeight);set('planProfileWeight',c.profileWeight);set('planAreaLimit',c.areaLimit);set('planYieldLimit',c.yieldLimit);set('planAreaPrecision',c.areaPrecision);
+    c.areaPrecision=1;
+    set('planYear',c.year);set('planTotalArea',c.totalArea||'');set('planTotalPurchase',c.totalPurchase||'');set('planIntentWeight',c.intentWeight);set('planProfileWeight',c.profileWeight);set('planAreaLimit',c.areaLimit);set('planYieldLimit',c.yieldLimit);
     set('coefCore',c.classCoefficients['核心标杆户']);set('coefStable',c.classCoefficients['稳定经营户']);set('coefNew',c.classCoefficients['新烟农']);set('coefWarning',c.classCoefficients['低效预警户']);set('coefOld',c.classCoefficients['老龄维持户']);
     set('planCityAvgYield',c.totalArea>0&&c.totalPurchase>0?`${round(c.totalPurchase/c.totalArea,2)} kg/亩`:'—');
     const f=planFeasibility(), cls=f.areaFeasible?'info':'error';
@@ -1766,14 +1874,14 @@ button { cursor: pointer; }
   function filteredAnomalies(){const sev=document.getElementById('anomalySeverityFilter')?.value||'',status=document.getElementById('anomalyStatusFilter')?.value||'',q=(document.getElementById('anomalyKeyword')?.value||'').trim().toLowerCase();return state.plan.anomalies.filter(a=>(!sev||a.severity===sev)&&(!status||(state.plan.reviews[a.id]?.status||a.status)===status)&&(!q||`${a.name}${a.farmer_id}${a.type}${a.message}`.toLowerCase().includes(q)));}
   function renderAnomalyReview(){if(state.plan.purchaseBalanced.length||state.plan.purchaseMeta)state.plan.anomalies=buildPlanAnomalies();const rows=filteredAnomalies(),all=state.plan.anomalies;document.getElementById('anomalySummary').innerHTML=metricsHtml([['异常总数',`${all.length}项`],['高风险',`${all.filter(a=>a.severity==='高').length}项`,'status-error'],['待审核',`${all.filter(a=>(state.plan.reviews[a.id]?.status||a.status)==='待审核').length}项`,'status-warn'],['已处理',`${all.filter(a=>(state.plan.reviews[a.id]?.status||a.status)!=='待审核').length}项`,'status-ok']]);document.getElementById('anomalyTable').innerHTML=rows.length?tableHtml(['烟农','异常类型','等级','异常说明','审核'],rows.map(a=>{const review=state.plan.reviews[a.id]||a;return [`${escapeHtml(a.name)}<br><span class="muted">${escapeHtml(a.farmer_id)}</span>`,escapeHtml(a.type),a.severity==='高'?'<span class="badge badge-high">高</span>':a.severity==='中'?'<span class="badge badge-medium">中</span>':'<span class="badge badge-low">低</span>',escapeHtml(a.message),`<div class="review-controls" data-anomaly-id="${escapeAttr(a.id)}"><select class="review-select"><option ${review.status==='待审核'?'selected':''}>待审核</option><option ${review.status==='通过'?'selected':''}>通过</option><option ${review.status==='需调整'?'selected':''}>需调整</option><option ${review.status==='已说明'?'selected':''}>已说明</option></select><input class="review-note" value="${escapeAttr(review.note||'')}" placeholder="填写审核说明" /></div>`]})):tableHtml(['状态'],[[all.length?'没有符合筛选条件的异常':'未发现异常或尚未完成计划找平']]);}
 
-  function finalPlanChecks(){const cfg=state.plan.config,rows=state.plan.purchaseBalanced,areaTotal=sumBy(rows,r=>r.finalArea),purchaseTotal=sumBy(rows,r=>r.finalPurchase),areaOk=rows.length&&Math.abs(areaTotal-cfg.totalArea)<cfg.areaPrecision/2+.001,purchaseOk=rows.length&&Math.abs(purchaseTotal-cfg.totalPurchase)<cfg.purchasePrecision/2+.001,boundsOk=rows.length&&rows.every(r=>r.finalArea>=r.hardMin-1e-6&&r.finalArea<=r.hardMax+1e-6&&r.finalYield>=r.hardMinYield-1e-6&&r.finalYield<=r.hardMaxYield+1e-6),pending=state.plan.anomalies.filter(a=>(state.plan.reviews[a.id]?.status||a.status)==='待审核').length,adjust=state.plan.anomalies.filter(a=>(state.plan.reviews[a.id]?.status||a.status)==='需调整').length;return {rows,areaTotal,purchaseTotal,areaOk,purchaseOk,boundsOk,pending,adjust,ready:areaOk&&purchaseOk&&boundsOk&&!pending&&!adjust};}
+  function finalPlanChecks(){const cfg=state.plan.config,rows=state.plan.purchaseBalanced,areaTotal=sumBy(rows,r=>r.finalArea),purchaseTotal=sumBy(rows,r=>r.finalPurchase),areaOk=rows.length&&Math.abs(areaTotal-cfg.totalArea)<.501,purchaseOk=rows.length&&Math.abs(purchaseTotal-cfg.totalPurchase)<cfg.purchasePrecision/2+.001,boundsOk=rows.length&&rows.every(r=>r.finalArea>=r.hardMin-1e-6&&r.finalArea<=r.hardMax+1e-6&&r.finalYield>=r.hardMinYield-1e-6&&r.finalYield<=r.hardMaxYield+1e-6),pending=state.plan.anomalies.filter(a=>(state.plan.reviews[a.id]?.status||a.status)==='待审核').length,adjust=state.plan.anomalies.filter(a=>(state.plan.reviews[a.id]?.status||a.status)==='需调整').length;return {rows,areaTotal,purchaseTotal,areaOk,purchaseOk,boundsOk,pending,adjust,ready:areaOk&&purchaseOk&&boundsOk&&!pending&&!adjust};}
   function renderFinalValidation(){const c=finalPlanChecks(),cards=[['面积闭环',c.areaOk?'通过':'未通过',`${fmt(c.areaTotal,1)} / ${fmt(state.plan.config.totalArea,1)}亩`,c.areaOk],['收购计划闭环',c.purchaseOk?'通过':'未通过',`${fmt(c.purchaseTotal,0)} / ${fmt(state.plan.config.totalPurchase,0)}kg`,c.purchaseOk],['单户硬边界',c.boundsOk?'全部合规':'存在越界','面积±5亩、亩产±10%',c.boundsOk],['待审核异常',`${c.pending}项`,c.pending?'需完成审核':'已全部处理',!c.pending],['需调整事项',`${c.adjust}项`,c.adjust?'请调整参数后重算':'无退回事项',!c.adjust],['方案状态',c.ready?'可导出发布':'草案待完善',c.ready?'全部核心校验通过':'仍有未完成事项',c.ready]];document.getElementById('finalValidation').innerHTML=cards.map(([l,v,s,ok])=>`<div class="validation-card"><span>${l}</span><strong class="${ok?'status-ok':'status-warn'}">${v}</strong><small>${s}</small></div>`).join('');}
   function setPlanStep(step){state.plan.currentStep=Number(step);persist();renderPlanPage();window.scrollTo({top:0,behavior:'smooth'});}
   function fmt(v,d=1){return Number.isFinite(Number(v))?Number(v).toLocaleString('zh-CN',{minimumFractionDigits:d,maximumFractionDigits:d}):'—';}
 
-  function planExportRows(){return state.plan.purchaseBalanced.map(r=>[state.plan.config.year,r.farmer_id,r.name,r.township,r.category,r.totalScore,r.intent,r.finalArea,r.areaAdjustment,r.baseYield,r.capacityIndex,r.finalYield,r.finalYieldRate*100,r.finalPurchase,r.hasRedline?'是':'否',r.relaxed?'是':'否',r.purchaseRelaxed?'是':'否']);}
-  function exportPlanCsv(){if(!state.plan.purchaseBalanced.length)return showToast('请先完成收购计划找平',true);downloadCsv(`烟农精准计划分户清单_${state.plan.config.year}.csv`,[['计划年度','烟农编号','姓名','乡镇/烟站','画像类别','综合得分','申请面积亩','最终面积亩','面积调整亩','基础亩产kg/亩','产能指数','最终亩产kg/亩','亩产浮动%','最终收购计划kg','信用红线','面积放宽','亩产放宽'],...planExportRows()]);}
-  function exportAnomalyCsv(){const rows=state.plan.anomalies.map(a=>[state.plan.config.year,a.farmer_id,a.name,a.township,a.type,a.severity,a.message,state.plan.reviews[a.id]?.status||a.status,state.plan.reviews[a.id]?.note||a.note]);downloadCsv(`烟农精准计划异常审核_${state.plan.config.year}.csv`,[['计划年度','烟农编号','姓名','乡镇/烟站','异常类型','等级','异常说明','审核状态','审核说明'],...rows]);}
+  function planExportRows(){return state.plan.purchaseBalanced.map(r=>[state.plan.config.year,r.farmer_id,r.name,r.county,r.station,r.category,r.totalScore,r.intent,r.finalArea,r.areaAdjustment,r.baseYield,r.capacityIndex,r.finalYield,r.finalYieldRate*100,r.finalPurchase,r.hasRedline?'是':'否',r.relaxed?'是':'否',r.purchaseRelaxed?'是':'否']);}
+  function exportPlanCsv(){if(!state.plan.purchaseBalanced.length)return showToast('请先完成收购计划找平',true);downloadCsv(`烟农精准计划分户清单_${state.plan.config.year}.csv`,[['计划年度','烟农编号','姓名','县','烟站','画像类别','综合得分','申请面积亩','最终面积亩','面积调整亩','基础亩产kg/亩','产能指数','最终亩产kg/亩','亩产浮动%','最终收购计划kg','信用红线','面积放宽','亩产放宽'],...planExportRows()]);}
+  function exportAnomalyCsv(){const rows=state.plan.anomalies.map(a=>[state.plan.config.year,a.farmer_id,a.name,a.county,a.station,a.type,a.severity,a.message,state.plan.reviews[a.id]?.status||a.status,state.plan.reviews[a.id]?.note||a.note]);downloadCsv(`烟农精准计划异常审核_${state.plan.config.year}.csv`,[['计划年度','烟农编号','姓名','县','烟站','异常类型','等级','异常说明','审核状态','审核说明'],...rows]);}
   function exportPlanJson(){if(!state.plan.purchaseBalanced.length)return showToast('暂无完整计划方案',true);downloadBlob(`烟农画像与精准计划方案_${state.plan.config.year}.json`,JSON.stringify({version:'V2.1',exportedAt:new Date().toISOString(),rawFarmers:state.rawFarmers,plan:state.plan},null,2),'application/json;charset=utf-8');}
 
   function categorySummaryRows(){const groups=groupBy(state.plan.purchaseBalanced,r=>r.category);return PLAN_CATEGORY_ORDER.map(cat=>{const rows=groups.get(cat)||[];return [cat,rows.length,sumBy(rows,r=>r.intent),sumBy(rows,r=>r.finalArea),sumBy(rows,r=>r.finalPurchase),rows.length?average(rows.map(r=>r.totalScore)):0,rows.length?sumBy(rows,r=>r.finalPurchase)/sumBy(rows,r=>r.finalArea):0];});}
@@ -1785,7 +1893,7 @@ button { cursor: pointer; }
   let CRC_TABLE=null;function crc32(bytes){if(!CRC_TABLE){CRC_TABLE=Array.from({length:256},(_,n)=>{let c=n;for(let k=0;k<8;k++)c=(c&1)?0xedb88320^(c>>>1):c>>>1;return c>>>0;});}let c=0xffffffff;for(const b of bytes)c=CRC_TABLE[(c^b)&255]^(c>>>8);return(c^0xffffffff)>>>0;}
   function u16(n){return [n&255,(n>>>8)&255]}function u32(n){return [n&255,(n>>>8)&255,(n>>>16)&255,(n>>>24)&255]}
   function zipStore(files){const enc=new TextEncoder(),local=[],central=[];let offset=0;for(const [name,text] of files){const nb=enc.encode(name),data=enc.encode(text),crc=crc32(data),lh=new Uint8Array([...u32(0x04034b50),...u16(20),...u16(0),...u16(0),...u16(0),...u16(0),...u32(crc),...u32(data.length),...u32(data.length),...u16(nb.length),...u16(0),...nb]);local.push(lh,data);const ch=new Uint8Array([...u32(0x02014b50),...u16(20),...u16(20),...u16(0),...u16(0),...u16(0),...u16(0),...u32(crc),...u32(data.length),...u32(data.length),...u16(nb.length),...u16(0),...u16(0),...u16(0),...u16(0),...u32(0),...u32(offset),...nb]);central.push(ch);offset+=lh.length+data.length;}const centralSize=central.reduce((s,a)=>s+a.length,0),end=new Uint8Array([...u32(0x06054b50),...u16(0),...u16(0),...u16(files.length),...u16(files.length),...u32(centralSize),...u32(offset),...u16(0)]);return new Blob([...local,...central,end],{type:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'});}
-  function exportPlanXlsx(){if(!state.plan.purchaseBalanced.length)return showToast('请先完成收购计划找平',true);const plan=[['计划年度','烟农编号','姓名','乡镇/烟站','画像类别','综合得分','申请面积亩','最终面积亩','面积调整亩','基础亩产kg/亩','产能指数','最终亩产kg/亩','亩产浮动%','最终收购计划kg','信用红线','面积放宽','亩产放宽'],...planExportRows()];const summary=[['画像类别','户数','申请面积亩','最终面积亩','收购计划kg','平均得分','平均核定亩产kg/亩'],...categorySummaryRows()];const anomaly=[['烟农编号','姓名','乡镇/烟站','异常类型','等级','异常说明','审核状态','审核说明'],...state.plan.anomalies.map(a=>[a.farmer_id,a.name,a.township,a.type,a.severity,a.message,state.plan.reviews[a.id]?.status||a.status,state.plan.reviews[a.id]?.note||a.note])];const checks=parameterCheckRows();const sheets=[['分户计划清单',plan],['分类汇总',summary],['异常审核',anomaly],['参数校验',checks]];const contentTypes=`<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="xml" ContentType="application/xml"/><Override PartName="/xl/workbook.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet.main+xml"/><Override PartName="/xl/styles.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.styles+xml"/>${sheets.map((_,i)=>`<Override PartName="/xl/worksheets/sheet${i+1}.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml"/>`).join('')}</Types>`;const rootRels=`<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="xl/workbook.xml"/></Relationships>`;const workbook=`<?xml version="1.0" encoding="UTF-8" standalone="yes"?><workbook xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships"><sheets>${sheets.map(([n],i)=>`<sheet name="${xmlEscape(n)}" sheetId="${i+1}" r:id="rId${i+1}"/>`).join('')}</sheets></workbook>`;const wbRels=`<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">${sheets.map((_,i)=>`<Relationship Id="rId${i+1}" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet" Target="worksheets/sheet${i+1}.xml"/>`).join('')}<Relationship Id="rId${sheets.length+1}" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/styles" Target="styles.xml"/></Relationships>`;const styles=`<?xml version="1.0" encoding="UTF-8" standalone="yes"?><styleSheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main"><fonts count="1"><font><sz val="11"/><name val="Microsoft YaHei"/></font></fonts><fills count="2"><fill><patternFill patternType="none"/></fill><fill><patternFill patternType="gray125"/></fill></fills><borders count="1"><border/></borders><cellStyleXfs count="1"><xf/></cellStyleXfs><cellXfs count="1"><xf xfId="0"/></cellXfs></styleSheet>`;const files=[['[Content_Types].xml',contentTypes],['_rels/.rels',rootRels],['xl/workbook.xml',workbook],['xl/_rels/workbook.xml.rels',wbRels],['xl/styles.xml',styles],...sheets.map(([n,m],i)=>[`xl/worksheets/sheet${i+1}.xml`,sheetXml(m)])];const url=URL.createObjectURL(zipStore(files));const a=document.createElement('a');a.href=url;a.download=`烟农精准计划分配结果_${state.plan.config.year}.xlsx`;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);}
+  function exportPlanXlsx(){if(!state.plan.purchaseBalanced.length)return showToast('请先完成收购计划找平',true);const plan=[['计划年度','烟农编号','姓名','县','烟站','画像类别','综合得分','申请面积亩','最终面积亩','面积调整亩','基础亩产kg/亩','产能指数','最终亩产kg/亩','亩产浮动%','最终收购计划kg','信用红线','面积放宽','亩产放宽'],...planExportRows()];const summary=[['画像类别','户数','申请面积亩','最终面积亩','收购计划kg','平均得分','平均核定亩产kg/亩'],...categorySummaryRows()];const anomaly=[['烟农编号','姓名','县','烟站','异常类型','等级','异常说明','审核状态','审核说明'],...state.plan.anomalies.map(a=>[a.farmer_id,a.name,a.county,a.station,a.type,a.severity,a.message,state.plan.reviews[a.id]?.status||a.status,state.plan.reviews[a.id]?.note||a.note])];const checks=parameterCheckRows();const sheets=[['分户计划清单',plan],['分类汇总',summary],['异常审核',anomaly],['参数校验',checks]];const contentTypes=`<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="xml" ContentType="application/xml"/><Override PartName="/xl/workbook.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet.main+xml"/><Override PartName="/xl/styles.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.styles+xml"/>${sheets.map((_,i)=>`<Override PartName="/xl/worksheets/sheet${i+1}.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml"/>`).join('')}</Types>`;const rootRels=`<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="xl/workbook.xml"/></Relationships>`;const workbook=`<?xml version="1.0" encoding="UTF-8" standalone="yes"?><workbook xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships"><sheets>${sheets.map(([n],i)=>`<sheet name="${xmlEscape(n)}" sheetId="${i+1}" r:id="rId${i+1}"/>`).join('')}</sheets></workbook>`;const wbRels=`<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">${sheets.map((_,i)=>`<Relationship Id="rId${i+1}" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet" Target="worksheets/sheet${i+1}.xml"/>`).join('')}<Relationship Id="rId${sheets.length+1}" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/styles" Target="styles.xml"/></Relationships>`;const styles=`<?xml version="1.0" encoding="UTF-8" standalone="yes"?><styleSheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main"><fonts count="1"><font><sz val="11"/><name val="Microsoft YaHei"/></font></fonts><fills count="2"><fill><patternFill patternType="none"/></fill><fill><patternFill patternType="gray125"/></fill></fills><borders count="1"><border/></borders><cellStyleXfs count="1"><xf/></cellStyleXfs><cellXfs count="1"><xf xfId="0"/></cellXfs></styleSheet>`;const files=[['[Content_Types].xml',contentTypes],['_rels/.rels',rootRels],['xl/workbook.xml',workbook],['xl/_rels/workbook.xml.rels',wbRels],['xl/styles.xml',styles],...sheets.map(([n,m],i)=>[`xl/worksheets/sheet${i+1}.xml`,sheetXml(m)])];const url=URL.createObjectURL(zipStore(files));const a=document.createElement('a');a.href=url;a.download=`烟农精准计划分配结果_${state.plan.config.year}.xlsx`;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);}
 
 
 
@@ -1818,6 +1926,7 @@ button { cursor: pointer; }
   }
 
   function bindEvents() {
+    window.addEventListener('resize', resizeDashboardCharts);
     document.querySelectorAll('.nav-item').forEach(btn => btn.addEventListener('click', () => goPage(btn.dataset.page)));
     document.querySelectorAll('[data-go]').forEach(btn => btn.addEventListener('click', () => goPage(btn.dataset.go)));
     document.querySelectorAll('[data-close-modal]').forEach(el => el.addEventListener('click', closeDetail));
@@ -1847,6 +1956,20 @@ button { cursor: pointer; }
     document.getElementById('exportBackupBtn').addEventListener('click', exportJsonBackup);
     document.getElementById('ruleSelfCheckBtn').addEventListener('click', runRuleRegressionChecks);
     document.getElementById('resetFiltersBtn').addEventListener('click', resetFilters);
+    document.getElementById('dashboardCountyFilter').addEventListener('change', e => {
+      state.dashboardCounty = e.target.value;
+      state.dashboardStation = '';
+      renderDashboard();
+    });
+    document.getElementById('dashboardStationFilter').addEventListener('change', e => {
+      state.dashboardStation = e.target.value;
+      renderDashboard();
+    });
+    document.getElementById('resetDashboardFiltersBtn').addEventListener('click', () => {
+      state.dashboardCounty = '';
+      state.dashboardStation = '';
+      renderDashboard();
+    });
     document.querySelectorAll('[data-plan-step]').forEach(btn => btn.addEventListener('click', () => setPlanStep(btn.dataset.planStep)));
     document.getElementById('suggestPlanParamsBtn').addEventListener('click', suggestPlanConfig);
     document.getElementById('savePlanParamsBtn').addEventListener('click', savePlanConfig);
@@ -1863,9 +1986,13 @@ button { cursor: pointer; }
     ['anomalySeverityFilter','anomalyStatusFilter'].forEach(id=>document.getElementById(id).addEventListener('change',renderAnomalyReview));
     document.getElementById('anomalyKeyword').addEventListener('input',renderAnomalyReview);
     document.getElementById('resetAnomalyFiltersBtn').addEventListener('click',()=>{document.getElementById('anomalySeverityFilter').value='';document.getElementById('anomalyStatusFilter').value='';document.getElementById('anomalyKeyword').value='';renderAnomalyReview();});
-    ['searchInput','classFilter','riskFilter','townshipFilter','scoreMin'].forEach(id => {
+    ['searchInput','classFilter','riskFilter','countyFilter','stationFilter','scoreMin'].forEach(id => {
       const el = document.getElementById(id);
-      el.addEventListener(id === 'searchInput' || id === 'scoreMin' ? 'input' : 'change', () => { state.tablePage = 1; renderFarmerTable(); });
+      el.addEventListener(id === 'searchInput' || id === 'scoreMin' ? 'input' : 'change', () => {
+        if (id === 'countyFilter') populateFilters();
+        state.tablePage = 1;
+        renderFarmerTable();
+      });
     });
   }
 
@@ -1938,56 +2065,181 @@ button { cursor: pointer; }
     renderRules();
   }
 
+  const dashboardCharts = new Map();
+  let dashboardResizeTimer = null;
+
+  function disposeDashboardChart(id) {
+    const chart = dashboardCharts.get(id);
+    if (chart) chart.dispose();
+    dashboardCharts.delete(id);
+  }
+
+  function disposeDashboardCharts() {
+    [...dashboardCharts.keys()].forEach(disposeDashboardChart);
+  }
+
+  function renderDashboardChart(id, option) {
+    const el = document.getElementById(id);
+    if (!el) return;
+    if (!window.echarts) {
+      disposeDashboardChart(id);
+      el.innerHTML = '<div class="chart-fallback"><strong>图表组件加载失败</strong><span>请检查网络连接后刷新页面。</span></div>';
+      return;
+    }
+    if (!el.clientWidth || !el.clientHeight) return;
+    let chart = dashboardCharts.get(id);
+    if (!chart || chart.isDisposed()) {
+      el.innerHTML = '';
+      chart = echarts.init(el, null, { renderer: 'svg' });
+      dashboardCharts.set(id, chart);
+    }
+    chart.setOption(option, true);
+    chart.resize();
+  }
+
+  function resizeDashboardCharts() {
+    clearTimeout(dashboardResizeTimer);
+    dashboardResizeTimer = setTimeout(() => dashboardCharts.forEach(chart => {
+      if (!chart.isDisposed()) chart.resize();
+    }), 80);
+  }
+
+  function matchesDashboardFilter(farmer) {
+    return (!state.dashboardCounty || farmer.county === state.dashboardCounty) &&
+      (!state.dashboardStation || farmer.station === state.dashboardStation);
+  }
+
+  function dashboardFarmers() {
+    return state.evaluated.filter(matchesDashboardFilter);
+  }
+
+  function renderDashboardFilters() {
+    const countySelect = document.getElementById('dashboardCountyFilter');
+    const stationSelect = document.getElementById('dashboardStationFilter');
+    const counties = [...new Set(state.evaluated.map(f => f.county).filter(Boolean))].sort((a,b) => a.localeCompare(b,'zh-CN'));
+    if (state.dashboardCounty && !counties.includes(state.dashboardCounty)) {
+      state.dashboardCounty = '';
+      state.dashboardStation = '';
+    }
+    const countyFarmers = state.dashboardCounty
+      ? state.evaluated.filter(f => f.county === state.dashboardCounty)
+      : state.evaluated;
+    const stations = [...new Set(countyFarmers.map(f => f.station).filter(Boolean))].sort((a,b) => a.localeCompare(b,'zh-CN'));
+    if (state.dashboardStation && !stations.includes(state.dashboardStation)) state.dashboardStation = '';
+
+    countySelect.innerHTML = '<option value="">全部县</option>' + counties.map(value =>
+      `<option value="${escapeAttr(value)}">${escapeHtml(value)}</option>`
+    ).join('');
+    stationSelect.innerHTML = '<option value="">全部烟站</option>' + stations.map(value =>
+      `<option value="${escapeAttr(value)}">${escapeHtml(value)}</option>`
+    ).join('');
+    countySelect.value = state.dashboardCounty;
+    stationSelect.value = state.dashboardStation;
+
+    const count = dashboardFarmers().length;
+    const scope = [state.dashboardCounty, state.dashboardStation].filter(Boolean).join(' · ') || '全部地区';
+    document.getElementById('dashboardFilterSummary').textContent = `${scope}，当前${count}户 / 全部${state.evaluated.length}户`;
+  }
+
+  function dashboardPlanStats(data = dashboardFarmers()) {
+    const plan = state.plan || defaultPlanState();
+    const cfg = plan.config || defaultPlanConfig();
+    const farmerIds = new Set(data.map(f => f.farmer_id));
+    const allAreaRows = plan.purchaseBalanced?.length ? plan.purchaseBalanced : plan.areaBalanced || [];
+    const allPurchaseRows = plan.purchaseBalanced || [];
+    const areaRows = allAreaRows.filter(row => farmerIds.has(row.farmer_id));
+    const purchaseRows = allPurchaseRows.filter(row => farmerIds.has(row.farmer_id));
+    const finalArea = sumBy(areaRows, row => row.finalArea);
+    const finalPurchase = sumBy(purchaseRows, row => row.finalPurchase);
+    const scopeFiltered = Boolean(state.dashboardCounty || state.dashboardStation);
+    const areaRate = scopeFiltered
+      ? (data.length && areaRows.length ? clamp(areaRows.length / data.length * 100, 0, 100) : null)
+      : (cfg.totalArea > 0 && finalArea > 0 ? clamp(finalArea / cfg.totalArea * 100, 0, 100) : null);
+    const purchaseRate = scopeFiltered
+      ? (data.length && purchaseRows.length ? clamp(purchaseRows.length / data.length * 100, 0, 100) : null)
+      : (cfg.totalPurchase > 0 && finalPurchase > 0 ? clamp(finalPurchase / cfg.totalPurchase * 100, 0, 100) : null);
+    const matchRate = areaRate === null || purchaseRate === null ? null : Math.min(areaRate, purchaseRate);
+    return { plan, cfg, areaRows, purchaseRows, finalArea, finalPurchase, areaRate, purchaseRate, matchRate, scopeFiltered, scopeCount: data.length };
+  }
+
   function renderDashboard() {
     const empty = document.getElementById('emptyDashboard');
     const content = document.getElementById('dashboardContent');
     const hasData = state.evaluated.length > 0;
     empty.classList.toggle('hidden', hasData);
     content.classList.toggle('hidden', !hasData);
-    if (!hasData) return;
+    if (!hasData) {
+      disposeDashboardCharts();
+      return;
+    }
 
-    const data = state.evaluated;
+    renderDashboardFilters();
+    const data = dashboardFarmers();
     const avgScore = average(data.map(f => f.totalScore));
-    const avgCompleteness = average(data.map(f => f.completeness));
+    const rawData = state.rawFarmers.filter(matchesDashboardFilter);
+    const importedTotal = state.dashboardCounty || state.dashboardStation ? 0 : numberValue(state.importReport?.received) || 0;
+    const farmerTotal = Math.max(importedTotal, rawData.length, data.length);
+    const evaluatedTotal = data.length;
+    const coverageRate = farmerTotal ? evaluatedTotal / farmerTotal * 100 : 0;
     const coreCount = data.filter(f => f.classification.name === '核心标杆户').length;
-    const highRisk = data.filter(f => f.risk.level === '高风险').length;
-    const lowWarning = data.filter(f => f.classification.name === '低效预警户').length;
+    const warningCount = data.filter(f => f.classification.name === '低效预警户' || f.risk.level !== '低风险').length;
+    const planStats = dashboardPlanStats(data);
     const kpis = [
-      ['烟农总数', `${data.length}户`, `${new Set(data.map(f => f.township)).size}个乡镇/烟站`, '#e8f4ed'],
-      ['平均综合得分', `${round(avgScore,1)}分`, `中位数${round(median(data.map(f => f.totalScore)),1)}分`, '#eaf1ff'],
+      ['烟农数字画像覆盖', `${round(coverageRate,1)}%`, `已评价${evaluatedTotal}户 / 数据${farmerTotal}户`, '#e8f4ed'],
+      ['烟农综合能力指数', `${round(avgScore,1)}分`, `中位数${round(median(data.map(f => f.totalScore)),1)}分`, '#eaf1ff'],
       ['核心标杆户', `${coreCount}户`, `占比${round(coreCount / data.length * 100,1)}%`, '#e7f5eb'],
-      ['低效预警户', `${lowWarning}户`, `需重点帮扶`, '#fff1e6'],
-      ['高风险事件', `${highRisk}户`, `平均完整度${round(avgCompleteness,1)}%`, '#ffecec']
+      ['重点风险对象', `${warningCount}户`, '低效预警或存在中高风险', '#fff1e6'],
+      ['计划匹配率', planStats.matchRate === null ? '待生成' : `${round(planStats.matchRate,1)}%`, planStats.matchRate === null ? '完成精准计划找平后显示' : `面积${round(planStats.areaRate,1)}% · 产量${round(planStats.purchaseRate,1)}%`, '#f0ecff']
     ];
     document.getElementById('kpiGrid').innerHTML = kpis.map(([label,value,sub,tone]) => `
       <div class="kpi-card" style="--tone:${tone}"><div class="kpi-label">${escapeHtml(label)}</div><div class="kpi-value">${escapeHtml(value)}</div><div class="kpi-sub">${escapeHtml(sub)}</div></div>
     `).join('');
-    renderClassDistribution();
-    renderAverageRadar();
-    renderTownshipBars();
-    renderRiskSummary();
-    renderAttentionTable();
+    renderClassDistribution(data);
+    renderAverageRadar(data);
+    renderStationBars(data);
+    renderRiskSummary(data);
+    renderPlanDashboard(data);
+    renderAttentionTable(data);
   }
 
-  function renderClassDistribution() {
-    const data = state.evaluated;
+  function renderClassDistribution(data) {
     const counts = CLASS_ORDER.map(name => ({ name, count: data.filter(f => f.classification.name === name).length }));
-    let acc = 0;
-    const gradient = counts.map(item => {
-      const start = acc;
-      acc += item.count / data.length * 100;
-      return `${CLASS_COLORS[item.name]} ${start}% ${acc}%`;
-    }).join(',');
-    document.getElementById('classDistribution').innerHTML = `
-      <div class="donut-layout">
-        <div class="donut" style="background:conic-gradient(${gradient})"><div class="donut-center"><strong>${data.length}</strong><span>总户数</span></div></div>
-        <div class="legend">${counts.map(item => `<div class="legend-item"><span class="legend-dot" style="background:${CLASS_COLORS[item.name]}"></span><span>${item.name}</span><span class="legend-value">${item.count}户 · ${round(item.count/data.length*100,1)}%</span></div>`).join('')}</div>
-      </div>`;
+    renderDashboardChart('classDistribution', {
+      color: CLASS_ORDER.map(name => CLASS_COLORS[name]),
+      tooltip: { trigger: 'item', formatter: p => `${p.name}<br/>${p.value}户（${p.percent}%）` },
+      legend: { orient: 'vertical', right: 8, top: 'center', itemWidth: 10, itemHeight: 10, textStyle: { color: '#526158', fontSize: 12 } },
+      title: { text: String(data.length), subtext: '画像总户数', left: '31%', top: '39%', textAlign: 'center', textStyle: { color: '#17211c', fontSize: 27, fontWeight: 800 }, subtextStyle: { color: '#758078', fontSize: 11 } },
+      series: [{
+        name: '烟农分类', type: 'pie', radius: ['50%','72%'], center: ['32%','50%'], minAngle: 3,
+        itemStyle: { borderColor: '#fff', borderWidth: 3 },
+        label: { show: false },
+        data: counts.map(item => ({ name: item.name, value: item.count }))
+      }]
+    });
   }
 
-  function renderAverageRadar() {
-    const values = DIMENSION_ORDER.map(dim => average(state.evaluated.map(f => f.dimensionScores[dim].standard).filter(v => v !== null)));
-    document.getElementById('averageRadar').innerHTML = radarSvg(values, DIMENSION_ORDER);
+  function renderAverageRadar(data) {
+    const values = DIMENSION_ORDER.map(dim => average(data.map(f => f.dimensionScores[dim].standard).filter(v => v !== null)));
+    renderDashboardChart('averageRadar', {
+      color: ['#176b45','#d97706'],
+      tooltip: { trigger: 'item' },
+      legend: { bottom: 0, data: ['群体平均','优秀标准'], textStyle: { color: '#526158' } },
+      radar: {
+        center: ['50%','47%'], radius: '66%', splitNumber: 5,
+        indicator: DIMENSION_ORDER.map(name => ({ name, max: 100 })),
+        axisName: { color: '#425149', fontSize: 12, fontWeight: 700 },
+        splitLine: { lineStyle: { color: '#dce6df' } },
+        splitArea: { areaStyle: { color: ['#fbfdfc','#f5f9f7'] } },
+        axisLine: { lineStyle: { color: '#dce6df' } }
+      },
+      series: [{
+        type: 'radar',
+        data: [
+          { value: values.map(v => round(v,1)), name: '群体平均', areaStyle: { color: 'rgba(23,107,69,.22)' }, lineStyle: { width: 2.5 }, symbolSize: 6 },
+          { value: DIMENSION_ORDER.map(() => 80), name: '优秀标准', areaStyle: { color: 'transparent' }, lineStyle: { type: 'dashed', width: 2 }, symbol: 'none' }
+        ]
+      }]
+    });
   }
 
   function radarSvg(values, labels) {
@@ -2009,40 +2261,151 @@ button { cursor: pointer; }
     return `<svg class="radar-svg" viewBox="0 0 420 300" role="img" aria-label="五维雷达图">${grids}${axesLines}<polygon class="radar-data" points="${polygon}"/>${dots}${labelEls}</svg>`;
   }
 
-  function renderTownshipBars() {
-    const groups = groupBy(state.evaluated, f => f.township || '未分组');
-    const rows = [...groups.entries()].map(([name, arr]) => ({ name, score: average(arr.map(f => f.totalScore)), count: arr.length })).sort((a,b) => b.score - a.score);
-    document.getElementById('townshipBars').innerHTML = rows.length ? rows.map(r => `
-      <div class="bar-row"><div class="bar-label" title="${escapeAttr(r.name)}">${escapeHtml(r.name)}（${r.count}）</div><div class="bar-track"><div class="bar-fill" style="width:${clamp(r.score,0,100)}%"></div></div><div class="bar-value">${round(r.score,1)}</div></div>
-    `).join('') : '<div class="muted">暂无数据</div>';
+  function renderStationBars(data) {
+    const groups = groupBy(data, f => f.station || '未分组');
+    const rows = [...groups.entries()].map(([name, arr]) => ({
+      name, score: round(average(arr.map(f => f.totalScore)),1), count: arr.length,
+      core: arr.filter(f => f.classification.name === '核心标杆户').length,
+      warning: arr.filter(f => f.classification.name === '低效预警户' || f.risk.level !== '低风险').length
+    })).sort((a,b) => b.score - a.score);
+    renderDashboardChart('stationBars', {
+      grid: { left: 18, right: 42, top: 10, bottom: 28, containLabel: true },
+      tooltip: {
+        trigger: 'axis', axisPointer: { type: 'shadow' },
+        formatter: params => {
+          const row = rows[params[0].dataIndex];
+          return `${escapeHtml(row.name)}<br/>平均分：${row.score}<br/>烟农：${row.count}户<br/>核心户：${row.core}户<br/>风险户：${row.warning}户`;
+        }
+      },
+      xAxis: { type: 'value', min: 0, max: 100, axisLabel: { color: '#718078' }, splitLine: { lineStyle: { color: '#e8eeea' } } },
+      yAxis: { type: 'category', inverse: true, data: rows.map(r => r.name), axisLabel: { color: '#425149', width: 90, overflow: 'truncate' }, axisTick: { show: false }, axisLine: { show: false } },
+      series: [{
+        type: 'bar', data: rows.map(r => r.score), barMaxWidth: 18,
+        itemStyle: { color: '#2a8b5c' },
+        label: { show: true, position: 'right', color: '#26372e', fontWeight: 700 }
+      }]
+    });
+    const top = rows[0];
+    document.getElementById('stationSummary').innerHTML = top ? [
+      ['烟站数量', `${rows.length}个`],
+      ['最高平均分', `${top.score}分`],
+      ['核心户合计', `${sumBy(rows,r=>r.core)}户`],
+      ['风险户合计', `${sumBy(rows,r=>r.warning)}户`]
+    ].map(([label,value]) => `<div><span>${label}</span><strong>${value}</strong></div>`).join('') : '';
   }
 
-  function renderRiskSummary() {
-    const data = state.evaluated;
-    const levels = ['高风险','中风险','低风险'];
-    const count = Object.fromEntries(levels.map(l => [l,data.filter(f => f.risk.level === l).length]));
-    const completeness = average(data.map(f => f.completeness));
-    const missing = data.filter(f => f.completeness < 70).length;
-    document.getElementById('riskSummary').innerHTML = `
-      <div class="risk-cards">
-        <div class="risk-card"><span>高风险</span><strong style="color:#c83b3b">${count['高风险']}</strong></div>
-        <div class="risk-card"><span>中风险</span><strong style="color:#b77900">${count['中风险']}</strong></div>
-        <div class="risk-card"><span>低风险</span><strong style="color:#27754d">${count['低风险']}</strong></div>
-      </div>
-      <div class="progress-block"><div class="progress-head"><span>平均数据完整度</span><strong>${round(completeness,1)}%</strong></div><div class="progress"><span style="width:${completeness}%"></span></div></div>
-      <div class="notice ${missing ? 'warn' : 'info'}"><strong>${missing ? `${missing}户数据完整度低于70%` : '数据完整度总体正常'}</strong><p>${missing ? '建议补充缺失指标后再作为正式评价依据。' : '核心标杆户仍需满足完整度不低于90%。'}</p></div>`;
+  function historyValue(farmer, year, field) {
+    return numberValue(farmer[`history_${year}_${field}`]);
   }
 
-  function renderAttentionTable() {
-    const sorted = [...state.evaluated].sort((a,b) => attentionPriority(b) - attentionPriority(a)).slice(0,8);
+  function gradeQualityRate(farmer, year) {
+    const upper = historyValue(farmer, year, 'upper_grade');
+    const middle = historyValue(farmer, year, 'middle_grade');
+    const lower = historyValue(farmer, year, 'lower_grade');
+    if ([upper,middle,lower].some(v => v === null) || upper + middle + lower <= 0) return null;
+    return (upper + middle) / (upper + middle + lower);
+  }
+
+  function dashboardRiskFlags(farmer) {
+    const area2025 = historyValue(farmer, 2025, 'area');
+    const area2024 = historyValue(farmer, 2024, 'area');
+    const quality2025 = gradeQualityRate(farmer, 2025);
+    const quality2024 = gradeQualityRate(farmer, 2024);
+    const compliance = farmer.hasRedline || (numberValue(farmer.delay_delivery_count) || 0) > 0 ||
+      (numberValue(farmer.contract_abnormal_years) || 0) > 0 ||
+      boolValue(farmer.unauthorized_contract_transfer) === true ||
+      boolValue(farmer.false_data) === true || boolValue(farmer.serious_violation) === true;
+    return {
+      age: farmer.age !== null && farmer.age >= 65,
+      scale: area2025 !== null && area2024 !== null && area2025 < area2024,
+      quality: quality2025 !== null && quality2024 !== null && quality2025 < quality2024,
+      compliance
+    };
+  }
+
+  function renderRiskSummary(data) {
+    const flags = data.map(dashboardRiskFlags);
+    const rows = [
+      { name:'年龄风险', value:flags.filter(f=>f.age).length, color:'#7c3aed' },
+      { name:'规模下降', value:flags.filter(f=>f.scale).length, color:'#d97706' },
+      { name:'质量下降', value:flags.filter(f=>f.quality).length, color:'#2563eb' },
+      { name:'履约异常', value:flags.filter(f=>f.compliance).length, color:'#c83b3b' }
+    ];
+    renderDashboardChart('riskSummary', {
+      grid: { left: 16, right: 22, top: 22, bottom: 26, containLabel: true },
+      tooltip: { trigger: 'axis', axisPointer: { type: 'shadow' }, formatter: p => `${p[0].name}<br/>${p[0].value}户 · ${round(p[0].value/data.length*100,1)}%` },
+      xAxis: { type: 'category', data: rows.map(r=>r.name), axisTick: { show:false }, axisLine: { lineStyle:{ color:'#cad6ce' } }, axisLabel:{ color:'#425149', interval:0 } },
+      yAxis: { type: 'value', minInterval: 1, axisLabel:{ color:'#718078' }, splitLine:{ lineStyle:{ color:'#e8eeea' } } },
+      series: [{
+        type:'bar', barMaxWidth: 42,
+        data: rows.map(r=>({ value:r.value, itemStyle:{ color:r.color } })),
+        label:{ show:true, position:'top', formatter:p=>`${p.value}户`, color:'#26372e', fontWeight:700 }
+      }]
+    });
+    document.getElementById('riskDefinition').textContent = '口径：年龄风险为65岁及以上；规模下降为2025年面积低于2024年；质量下降为2025年中上等烟占比较2024年下降；履约异常包括红线、延期交售或合同连续异常。';
+  }
+
+  function renderPlanDashboard(data) {
+    const stats = dashboardPlanStats(data);
+    const metrics = document.getElementById('planDashboardMetrics');
+    const chartId = 'planCategoryChart';
+    if (!stats.areaRows.length && !stats.purchaseRows.length) {
+      metrics.innerHTML = '<div class="dashboard-empty-inline" style="grid-column:1/-1"><strong>精准计划尚未形成</strong><span>完成面积找平和收购计划找平后，这里将自动展示结果。</span></div>';
+      disposeDashboardChart(chartId);
+      document.getElementById(chartId).innerHTML = '<div class="dashboard-empty-inline"><strong>暂无分类调整数据</strong><span>不影响画像评价与分类结果。</span></div>';
+      return;
+    }
+    const adjustments = stats.areaRows.map(r => Math.abs(numberValue(r.areaAdjustment) || ((numberValue(r.finalArea)||0) - (numberValue(r.intent)||0))));
+    const averageAdjustment = adjustments.length ? average(adjustments) : 0;
+    metrics.innerHTML = [
+      ['最终种植面积', `${fmt(stats.finalArea,1)}亩`, stats.scopeFiltered ? `筛选范围已分配${stats.areaRows.length}户` : `目标${fmt(stats.cfg.totalArea,1)}亩`],
+      ['最终收购计划', stats.purchaseRows.length ? `${fmt(stats.finalPurchase,0)}kg` : '待找平', stats.scopeFiltered ? `筛选范围已分配${stats.purchaseRows.length}户` : `目标${fmt(stats.cfg.totalPurchase,0)}kg`],
+      ['计划闭环完成率', stats.matchRate === null ? '待完成' : `${round(stats.matchRate,1)}%`, stats.matchRate === null ? '需完成面积与收购计划找平' : `面积${round(stats.areaRate,1)}% · 产量${round(stats.purchaseRate,1)}%`],
+      ['户均面积调整', `${round(averageAdjustment,1)}亩`, `参与分配${stats.areaRows.length}户`]
+    ].map(([label,value,sub]) => `<div class="plan-metric"><span>${label}</span><strong>${value}</strong><small>${sub}</small></div>`).join('');
+
+    const grouped = groupBy(stats.areaRows, r => r.category || '未分类');
+    const rows = PLAN_CATEGORY_ORDER.map(category => {
+      const items = grouped.get(category) || [];
+      return {
+        category,
+        value: items.length ? round(average(items.map(r => (numberValue(r.finalArea)||0) - (numberValue(r.intent)||0))),2) : 0,
+        count: items.length
+      };
+    }).filter(r => r.count);
+    renderDashboardChart(chartId, {
+      grid:{ left:14, right:28, top:18, bottom:24, containLabel:true },
+      tooltip:{ trigger:'axis', axisPointer:{ type:'shadow' }, formatter:p=>`${p[0].name}<br/>户均调整：${p[0].value>=0?'+':''}${p[0].value}亩<br/>烟农：${rows[p[0].dataIndex].count}户` },
+      xAxis:{ type:'value', axisLabel:{ color:'#718078', formatter:v=>`${v}亩` }, splitLine:{ lineStyle:{ color:'#e8eeea' } } },
+      yAxis:{ type:'category', inverse:true, data:rows.map(r=>r.category), axisTick:{show:false}, axisLine:{show:false}, axisLabel:{color:'#425149'} },
+      series:[{
+        type:'bar', barMaxWidth:18,
+        data:rows.map(r=>({ value:r.value, itemStyle:{ color:r.value>=0?'#2a8b5c':'#d97706' } })),
+        label:{ show:true, position:'right', formatter:p=>`${p.value>=0?'+':''}${p.value}亩`, color:'#26372e', fontWeight:700 }
+      }]
+    });
+  }
+
+  function renderAttentionTable(data) {
+    const sorted = [...data].sort((a,b) => attentionPriority(b) - attentionPriority(a)).slice(0,8);
+    const planRows = state.plan?.purchaseBalanced?.length ? state.plan.purchaseBalanced : state.plan?.areaBalanced || [];
+    const planById = new Map(planRows.map(row => [row.farmer_id,row]));
     document.getElementById('attentionTable').innerHTML = tableHtml(
-      ['烟农','乡镇/烟站','综合得分','综合分类','风险','完整度','关注原因','操作'],
-      sorted.map(f => [
-        `<strong>${escapeHtml(f.name)}</strong><br><span class="muted">${escapeHtml(f.farmer_id)}</span>`, escapeHtml(f.township),
-        `<span class="score-cell">${f.totalScore}</span>`, classBadge(f.classification.name), riskBadge(f.risk.level), `${f.completeness}%`,
-        escapeHtml(f.risk.level !== '低风险' ? f.risk.reason : f.classification.reason),
-        `<button class="action-link" data-detail="${escapeAttr(f.farmer_id)}">查看画像</button>`
-      ])
+      ['烟农','县','烟站','分类','风险原因','建议措施','种植面积','收购计划','操作'],
+      sorted.map(f => {
+        const plan = planById.get(f.farmer_id);
+        const area = numberValue(plan?.finalArea) ?? numberValue(f.next_year_intended_area);
+        const purchase = numberValue(plan?.finalPurchase);
+        return [
+          `<strong>${escapeHtml(f.name)}</strong><br><span class="muted">${escapeHtml(f.farmer_id)}</span>`, escapeHtml(f.county), escapeHtml(f.station),
+          `${classBadge(f.classification.name)}<br>${riskBadge(f.risk.level)}`,
+          escapeHtml(f.risk.level !== '低风险' ? f.risk.reason : f.classification.reason),
+          escapeHtml(f.suggestions?.[0] || '按年度完成复评并持续跟踪。'),
+          area === null ? '<span class="muted">未填写</span>' : `<strong>${fmt(area,1)}亩</strong>`,
+          purchase === null ? '<span class="muted">待分配</span>' : `<strong>${fmt(purchase,0)}kg</strong>`,
+          `<button class="action-link" data-detail="${escapeAttr(f.farmer_id)}">查看画像</button>`
+        ];
+      })
     );
   }
 
@@ -2064,8 +2427,8 @@ button { cursor: pointer; }
     }
     const rows = state.evaluated.slice(0,10);
     document.getElementById('previewTable').innerHTML = rows.length ? tableHtml(
-      ['烟农编号','姓名','乡镇/烟站','年龄','总分','综合分类','风险','完整度'],
-      rows.map(f => [escapeHtml(f.farmer_id),escapeHtml(f.name),escapeHtml(f.township),f.age ?? '—',f.totalScore,classBadge(f.classification.name),riskBadge(f.risk.level),`${f.completeness}%`])
+      ['烟农编号','姓名','县','烟站','年龄','总分','综合分类','风险','完整度'],
+      rows.map(f => [escapeHtml(f.farmer_id),escapeHtml(f.name),escapeHtml(f.county),escapeHtml(f.station),f.age ?? '—',f.totalScore,classBadge(f.classification.name),riskBadge(f.risk.level),`${f.completeness}%`])
     ) : tableHtml(['状态'],[['暂无数据']]);
   }
 
@@ -2077,24 +2440,28 @@ button { cursor: pointer; }
   function populateFilters() {
     const classSelect = document.getElementById('classFilter');
     const riskSelect = document.getElementById('riskFilter');
-    const townshipSelect = document.getElementById('townshipFilter');
-    const currentClass = classSelect.value, currentRisk = riskSelect.value, currentTown = townshipSelect.value;
+    const countySelect = document.getElementById('countyFilter');
+    const stationSelect = document.getElementById('stationFilter');
+    const currentClass = classSelect.value, currentRisk = riskSelect.value, currentCounty = countySelect.value, currentStation = stationSelect.value;
     classSelect.innerHTML = '<option value="">全部分类</option>' + CLASS_ORDER.map(v => `<option>${v}</option>`).join('');
     riskSelect.innerHTML = '<option value="">全部风险</option>' + ['高风险','中风险','低风险'].map(v => `<option>${v}</option>`).join('');
-    const towns = [...new Set(state.evaluated.map(f => f.township).filter(Boolean))].sort();
-    townshipSelect.innerHTML = '<option value="">全部区域</option>' + towns.map(v => `<option>${escapeHtml(v)}</option>`).join('');
-    classSelect.value = currentClass; riskSelect.value = currentRisk; townshipSelect.value = currentTown;
+    const counties = [...new Set(state.evaluated.map(f => f.county).filter(Boolean))].sort();
+    const stations = [...new Set(state.evaluated.filter(f => !currentCounty || f.county === currentCounty).map(f => f.station).filter(Boolean))].sort();
+    countySelect.innerHTML = '<option value="">全部县</option>' + counties.map(v => `<option>${escapeHtml(v)}</option>`).join('');
+    stationSelect.innerHTML = '<option value="">全部烟站</option>' + stations.map(v => `<option>${escapeHtml(v)}</option>`).join('');
+    classSelect.value = currentClass; riskSelect.value = currentRisk; countySelect.value = currentCounty; stationSelect.value = stations.includes(currentStation) ? currentStation : '';
   }
 
   function filteredFarmers() {
     const q = document.getElementById('searchInput').value.trim().toLowerCase();
     const cls = document.getElementById('classFilter').value;
     const risk = document.getElementById('riskFilter').value;
-    const town = document.getElementById('townshipFilter').value;
+    const county = document.getElementById('countyFilter').value;
+    const station = document.getElementById('stationFilter').value;
     const min = numberValue(document.getElementById('scoreMin').value);
     return state.evaluated.filter(f => {
-      const text = `${f.name} ${f.farmer_id} ${f.township}`.toLowerCase();
-      return (!q || text.includes(q)) && (!cls || f.classification.name === cls) && (!risk || f.risk.level === risk) && (!town || f.township === town) && (min === null || f.totalScore >= min);
+      const text = `${f.name} ${f.farmer_id} ${f.county} ${f.station}`.toLowerCase();
+      return (!q || text.includes(q)) && (!cls || f.classification.name === cls) && (!risk || f.risk.level === risk) && (!county || f.county === county) && (!station || f.station === station) && (min === null || f.totalScore >= min);
     }).sort((a,b) => b.totalScore - a.totalScore);
   }
 
@@ -2105,9 +2472,9 @@ button { cursor: pointer; }
     state.tablePage = clamp(state.tablePage,1,totalPages);
     const pageRows = data.slice((state.tablePage-1)*PAGE_SIZE,state.tablePage*PAGE_SIZE);
     document.getElementById('farmerTable').innerHTML = pageRows.length ? tableHtml(
-      ['烟农','乡镇/烟站','年龄','综合得分','基础','生产','质量','信用','客观','综合分类','风险','画像标签','操作'],
+      ['烟农','县','烟站','年龄','综合得分','基础','生产','质量','信用','客观','综合分类','风险','画像标签','操作'],
       pageRows.map(f => [
-        `<strong>${escapeHtml(f.name)}</strong><br><span class="muted">${escapeHtml(f.farmer_id)}</span>`,escapeHtml(f.township),f.age ?? '—',
+        `<strong>${escapeHtml(f.name)}</strong><br><span class="muted">${escapeHtml(f.farmer_id)}</span>`,escapeHtml(f.county),escapeHtml(f.station),f.age ?? '—',
         `<span class="score-cell">${f.totalScore}</span>`,...DIMENSION_ORDER.map(d => f.dimensionScores[d].standard ?? '—'),
         classBadge(f.classification.name),riskBadge(f.risk.level),f.tags.slice(0,3).map(t => `<span class="tag">${escapeHtml(t)}</span>`).join('') || '—',
         `<button class="action-link" data-detail="${escapeAttr(f.farmer_id)}">详情</button>`
@@ -2126,7 +2493,7 @@ button { cursor: pointer; }
   }
 
   function resetFilters() {
-    ['searchInput','classFilter','riskFilter','townshipFilter','scoreMin'].forEach(id => document.getElementById(id).value = '');
+    ['searchInput','classFilter','riskFilter','countyFilter','stationFilter','scoreMin'].forEach(id => document.getElementById(id).value = '');
     state.tablePage = 1;
     renderFarmerTable();
   }
@@ -2170,12 +2537,12 @@ button { cursor: pointer; }
     const historyRows = detailHistoryRows(f);
     document.getElementById('detailContent').innerHTML = `
       <div class="detail-header">
-        <div class="detail-title"><h2 id="detailTitle">${escapeHtml(f.name)} · 烟农画像</h2><p>${escapeHtml(f.farmer_id)}｜${escapeHtml(f.township)}｜评价年度${escapeHtml(f.evaluation_year || '')}</p><div style="margin-top:10px">${classBadge(f.classification.name)} ${riskBadge(f.risk.level)} ${f.tags.map(t => `<span class="tag">${escapeHtml(t)}</span>`).join('')}</div></div>
+        <div class="detail-title"><h2 id="detailTitle">${escapeHtml(f.name)} · 烟农画像</h2><p>${escapeHtml(f.farmer_id)}｜${escapeHtml(f.county)}｜${escapeHtml(f.station)}｜评价年度${escapeHtml(f.evaluation_year || '')}</p><div style="margin-top:10px">${classBadge(f.classification.name)} ${riskBadge(f.risk.level)} ${f.tags.map(t => `<span class="tag">${escapeHtml(t)}</span>`).join('')}</div></div>
         <div class="detail-score"><strong>${f.totalScore}</strong><span>综合得分｜完整度${f.completeness}%</span></div>
       </div>
       <div class="notice ${f.risk.level==='高风险'?'error':f.risk.level==='中风险'?'warn':'info'}"><strong>分类依据</strong><p>${escapeHtml(f.classification.reason)}；风险判断：${escapeHtml(f.risk.reason)}</p></div>
       <div class="detail-card" style="margin-top:18px"><h4>基础信息</h4><div class="info-grid">
-        <div><span>所在县</span><strong>${escapeHtml(f.county||'—')}</strong></div><div><span>所属烟站</span><strong>${escapeHtml(f.township||'—')}</strong></div><div><span>年龄</span><strong>${escapeHtml(f.age??'—')}岁</strong></div><div><span>种烟年限</span><strong>${escapeHtml(f.continuous_years??'—')}年</strong></div><div><span>联系电话</span><strong>${escapeHtml(f.contact_phone||'—')}</strong></div><div><span>家庭劳动力人口</span><strong>${escapeHtml(f.family_labor_count??'—')}人</strong></div><div><span>受灾情况</span><strong>${escapeHtml(f.disaster_status||'未填')}</strong></div>
+        <div><span>县</span><strong>${escapeHtml(f.county||'—')}</strong></div><div><span>烟站</span><strong>${escapeHtml(f.station||'—')}</strong></div><div><span>年龄</span><strong>${escapeHtml(f.age??'—')}岁</strong></div><div><span>种烟年限</span><strong>${escapeHtml(f.continuous_years??'—')}年</strong></div><div><span>联系电话</span><strong>${escapeHtml(f.contact_phone||'—')}</strong></div><div><span>家庭劳动力人口</span><strong>${escapeHtml(f.family_labor_count??'—')}人</strong></div><div><span>受灾情况</span><strong>${escapeHtml(f.disaster_status||'未填')}</strong></div>
       </div></div>
       <div class="detail-grid">
         <div class="detail-card"><h4>五维画像</h4>${radarSvg(dimValues,DIMENSION_ORDER)}</div>
@@ -2346,16 +2713,16 @@ button { cursor: pointer; }
 
   function exportSummaryCsv() {
     if (!state.evaluated.length) return showToast('暂无可导出的评价结果', true);
-    const headers = ['评价年度','烟农编号','姓名','乡镇/烟站','年龄','新烟农','综合得分','数据完整度%','基础属性','生产能力','质量水平','信用行为','客观评价','综合分类','分类依据','风险等级','风险原因','画像标签'];
-    const rows = state.evaluated.map(f => [f.evaluation_year,f.farmer_id,f.name,f.township,f.age,f.isNew?'是':'否',f.totalScore,f.completeness,...DIMENSION_ORDER.map(d => f.dimensionScores[d].standard ?? ''),f.classification.name,f.classification.reason,f.risk.level,f.risk.reason,f.tags.join('、')]);
+    const headers = ['评价年度','烟农编号','姓名','县','烟站','年龄','新烟农','综合得分','数据完整度%','基础属性','生产能力','质量水平','信用行为','客观评价','综合分类','分类依据','风险等级','风险原因','画像标签'];
+    const rows = state.evaluated.map(f => [f.evaluation_year,f.farmer_id,f.name,f.county,f.station,f.age,f.isNew?'是':'否',f.totalScore,f.completeness,...DIMENSION_ORDER.map(d => f.dimensionScores[d].standard ?? ''),f.classification.name,f.classification.reason,f.risk.level,f.risk.reason,f.tags.join('、')]);
     downloadCsv('烟农画像评价结果.csv', [headers,...rows]);
   }
 
   function exportDetailCsv() {
     if (!state.evaluated.length) return showToast('暂无可导出的评分明细', true);
-    const headers = ['烟农编号','姓名','乡镇/烟站','综合分类','风险等级','维度','指标','权重','得分','是否已评','得分依据'];
+    const headers = ['烟农编号','姓名','县','烟站','综合分类','风险等级','维度','指标','权重','得分','是否已评','得分依据'];
     const rows = [];
-    state.evaluated.forEach(f => f.indicatorScores.forEach(i => rows.push([f.farmer_id,f.name,f.township,f.classification.name,f.risk.level,i.dimension,i.name,i.weight,i.score ?? '',i.assessed?'是':'否',i.reason])));
+    state.evaluated.forEach(f => f.indicatorScores.forEach(i => rows.push([f.farmer_id,f.name,f.county,f.station,f.classification.name,f.risk.level,i.dimension,i.name,i.weight,i.score ?? '',i.assessed?'是':'否',i.reason])));
     downloadCsv('烟农27项指标评分明细.csv', [headers,...rows]);
   }
 
@@ -2416,7 +2783,7 @@ button { cursor: pointer; }
 
     const excelDate = formatDate(45658);
     check('Excel数字日期解析', excelDate === '2025-01-01', `45658解析为${excelDate}`);
-    check('导入字段映射', FIELD_ALIASES[normalizeHeader('核心技术落实评分%')] === 'core_tech_score_rate' && FIELD_ALIASES[normalizeHeader('烟农配合度评分%')] === 'cooperation_score_rate' && FIELD_ALIASES[normalizeHeader('烤房数量')] === 'curing_house_count', '百分制字段及烤房数量均可正确映射');
+    check('导入字段映射', FIELD_ALIASES[normalizeHeader('县')] === 'county' && FIELD_ALIASES[normalizeHeader('烟站')] === 'station' && FIELD_ALIASES[normalizeHeader('核心技术落实评分%')] === 'core_tech_score_rate' && FIELD_ALIASES[normalizeHeader('烟农配合度评分%')] === 'cooperation_score_rate' && FIELD_ALIASES[normalizeHeader('烤房数量')] === 'curing_house_count', '县、烟站、百分制字段及烤房数量均可正确映射');
 
     const failed = checks.filter(item => !item.passed);
     const result = document.getElementById('ruleSelfCheckResult');
@@ -2466,3 +2833,5 @@ button { cursor: pointer; }
 </script>
 </body>
 </html>
+
+
