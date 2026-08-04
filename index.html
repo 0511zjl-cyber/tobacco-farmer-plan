@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="description" content="烟农五维评价、画像与分类应用" />
-  <title>烟农画像与精准计划分配系统 V2.1</title>
+  <title>烟农画像与计划分配系统 V2.1</title>
   <style>
 :root {
   --bg: #f3f6f4;
@@ -31,7 +31,7 @@ button { cursor: pointer; }
 .sidebar { position: sticky; top: 0; height: 100vh; background: linear-gradient(180deg,#0d4f32,#133d2c); color: #fff; padding: 22px 16px; display: flex; flex-direction: column; z-index: 10; }
 .brand { display: flex; gap: 12px; align-items: center; padding: 4px 8px 24px; }
 .brand-mark { width: 44px; height: 44px; border-radius: 14px; display: grid; place-items: center; font-size: 22px; font-weight: 700; background: rgba(255,255,255,.14); border: 1px solid rgba(255,255,255,.2); }
-.brand h1 { margin: 0; font-size: 20px; }
+.brand h1 { margin: 0; font-size: 16px; line-height: 1.4; }
 .brand p { margin: 5px 0 0; color: rgba(255,255,255,.65); font-size: 12px; }
 .nav-list { display: grid; gap: 8px; }
 .nav-item { border: 0; background: transparent; color: rgba(255,255,255,.72); text-align: left; padding: 12px 14px; border-radius: 12px; display: flex; gap: 12px; align-items: center; transition: .2s ease; }
@@ -343,8 +343,8 @@ button { cursor: pointer; }
       <div class="brand">
         <div class="brand-mark">叶</div>
         <div>
-          <h1>烟农画像</h1>
-          <p>画像评价与精准计划</p>
+          <h1>烟农画像与计划分配系统</h1>
+          <p>V2.1</p>
         </div>
       </div>
 
@@ -1882,7 +1882,7 @@ button { cursor: pointer; }
   function planExportRows(){return state.plan.purchaseBalanced.map(r=>[state.plan.config.year,r.farmer_id,r.name,r.county,r.station,r.category,r.totalScore,r.intent,r.finalArea,r.areaAdjustment,r.baseYield,r.capacityIndex,r.finalYield,r.finalYieldRate*100,r.finalPurchase,r.hasRedline?'是':'否',r.relaxed?'是':'否',r.purchaseRelaxed?'是':'否']);}
   function exportPlanCsv(){if(!state.plan.purchaseBalanced.length)return showToast('请先完成收购计划找平',true);downloadCsv(`烟农精准计划分户清单_${state.plan.config.year}.csv`,[['计划年度','烟农编号','姓名','县','烟站','画像类别','综合得分','申请面积亩','最终面积亩','面积调整亩','基础亩产kg/亩','产能指数','最终亩产kg/亩','亩产浮动%','最终收购计划kg','信用红线','面积放宽','亩产放宽'],...planExportRows()]);}
   function exportAnomalyCsv(){const rows=state.plan.anomalies.map(a=>[state.plan.config.year,a.farmer_id,a.name,a.county,a.station,a.type,a.severity,a.message,state.plan.reviews[a.id]?.status||a.status,state.plan.reviews[a.id]?.note||a.note]);downloadCsv(`烟农精准计划异常审核_${state.plan.config.year}.csv`,[['计划年度','烟农编号','姓名','县','烟站','异常类型','等级','异常说明','审核状态','审核说明'],...rows]);}
-  function exportPlanJson(){if(!state.plan.purchaseBalanced.length)return showToast('暂无完整计划方案',true);downloadBlob(`烟农画像与精准计划方案_${state.plan.config.year}.json`,JSON.stringify({version:'V2.1',exportedAt:new Date().toISOString(),rawFarmers:state.rawFarmers,plan:state.plan},null,2),'application/json;charset=utf-8');}
+  function exportPlanJson(){if(!state.plan.purchaseBalanced.length)return showToast('暂无完整计划方案',true);downloadBlob(`烟农画像与计划分配方案_${state.plan.config.year}.json`,JSON.stringify({version:'V2.1',exportedAt:new Date().toISOString(),rawFarmers:state.rawFarmers,plan:state.plan},null,2),'application/json;charset=utf-8');}
 
   function categorySummaryRows(){const groups=groupBy(state.plan.purchaseBalanced,r=>r.category);return PLAN_CATEGORY_ORDER.map(cat=>{const rows=groups.get(cat)||[];return [cat,rows.length,sumBy(rows,r=>r.intent),sumBy(rows,r=>r.finalArea),sumBy(rows,r=>r.finalPurchase),rows.length?average(rows.map(r=>r.totalScore)):0,rows.length?sumBy(rows,r=>r.finalPurchase)/sumBy(rows,r=>r.finalArea):0];});}
   function parameterCheckRows(){const c=finalPlanChecks(),cfg=state.plan.config,f=planFeasibility();return [['参数项','值','校验说明'],['计划年度',cfg.year,''],['全市固定面积亩',cfg.totalArea,c.areaOk?'已闭环':'未闭环'],['全市固定收购计划kg',cfg.totalPurchase,c.purchaseOk?'已闭环':'未闭环'],['新烟农基础亩产kg/亩',cfg.totalPurchase/cfg.totalArea,'全市计划÷全市面积'],['意愿权重%',cfg.intentWeight,''],['画像权重%',cfg.profileWeight,''],['面积调整上限亩',cfg.areaLimit,'不得超过5亩'],['亩产浮动上限%',cfg.yieldLimit,'不得超过10%'],['申请面积合计亩',f.intentSum,''],['面积可分配下限亩',f.hardMin,''],['面积可分配上限亩',f.hardMax,''],['面积闭环差额亩',c.areaTotal-cfg.totalArea,''],['收购闭环差额kg',c.purchaseTotal-cfg.totalPurchase,''],['待审核异常',c.pending,''],['需调整事项',c.adjust,''],['最终状态',c.ready?'可导出发布':'草案待完善','']];}
